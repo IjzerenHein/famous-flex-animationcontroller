@@ -20,13 +20,14 @@ define(function(require, exports, module) {
 
     // import dependencies
     var View = require('famous/core/View');
+    var LayoutController = require('famous-flex/LayoutController');
 
     var Slide = {
         NONE: undefined,
         LEFT: 'left',
         RIGHT: 'right',
         TOP: 'top',
-        BOTTOM: 'bottom',
+        BOTTOM: 'bottom'
     };
 
     /**
@@ -38,8 +39,7 @@ define(function(require, exports, module) {
     function ViewContainer(options) {
         View.apply(this, arguments);
 
-        this._viewStack = [];
-        _createViewStackLayout.call(this);
+        _createViewStack.call(this);
     }
     ViewContainer.prototype = Object.create(View.prototype);
     ViewContainer.prototype.constructor = ViewContainer;
@@ -50,37 +50,55 @@ define(function(require, exports, module) {
 
     function ViewStackLayout(context, options) {
         var set = {
-            size: context.size
+            size: context.size,
+            translate: [0, 0, 0]
         };
         var node = context.next();
         while (node) {
-            context.set()
+            context.set(node, set);
+            set.translate[2] += options.zIndexOffset;
             node = context.next();
         }
     }
 
-    function _createViewStackLayout() {
-        this._viewStackLayout = new LayoutController({
+    function _createViewStack() {
+        this._viewStack = new LayoutController({
             layout: ViewStackLayout,
-            dataSource: this._viewStack
+            layoutOptions: this.options,
+            dataSource: []
         });
-        this.add(this._viewStackLayout);
+        this.add(this._viewStack);
     }
 
     /**
-     * Get previous node.
+     * Shows a view and puts it on top of the view-stack.
      *
-     * @return {VirtualViewSequence} previous node.
+     * @return {ViewContainer} this
      */
     ViewContainer.prototype.show = function(show) {
+        this._viewStack.push(show.view);
+        return this;
     };
 
     /**
-     * Get previous node.
+     * Hides the view and removes it from the view-stack.
      *
-     * @return {VirtualViewSequence} previous node.
+     * @return {ViewContainer} this
      */
     ViewContainer.prototype.hide = function(show) {
+        var arr = this._viewStack.getDataSource();
+        var index = -1;
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i] === show.view) {
+                index = i;
+                break;
+            }
+        }
+        if (index < 0) {
+            return this;
+        }
+        this._viewStack.remove(index);
+        return this;
     };
 
     module.exports = ViewContainer;

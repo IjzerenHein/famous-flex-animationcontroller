@@ -22,7 +22,24 @@ define(function(require) {
 
     // import dependencies
     var Engine = require('famous/core/Engine');
+    var ViewContainer = require('./ViewContainer');
+    var ProfileView = require('./views/ProfileView');
 
     // create the main context
     var mainContext = Engine.createContext();
+    var viewContainer = new ViewContainer();
+    mainContext.add(viewContainer);
+
+    // create views
+    var profileView = new ProfileView();
+    profileView.on('click', function() {
+        viewContainer.hide({
+            view: profileView
+        });
+    });
+
+    viewContainer.show({
+        view: profileView
+    });
+
 });
