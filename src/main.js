@@ -32,14 +32,38 @@ define(function(require) {
 
     // create views
     var profileView = new ProfileView();
-    profileView.on('click', function() {
-        viewContainer.hide({
-            view: profileView
-        });
+    viewContainer.show(profileView);
+    viewContainer.on('click', function() {
+        console.log('click');
+        viewContainer.hide(undefined, {
+            transition: {
+                duration: 200
+            },
+            animations: {
+                slide: {
+                    enabled: true,
+                    direction: 'left'
+                },
+                fade: {
+                    enabled: true
+                }
+            }},
+            function() {
+                profileView = new ProfileView();
+                viewContainer.show(profileView, {
+                    origin: [0.5, 0.2],
+                    animations: {
+                        zoom: {
+                            enabled: true,
+                            scale: [0.8, 0.8]
+                        },
+                        fade: {
+                            enabled: true,
+                            opacity: 0.0
+                        }
+                    }
+                });
+            }
+        );
     });
-
-    viewContainer.show({
-        view: profileView
-    });
-
 });
