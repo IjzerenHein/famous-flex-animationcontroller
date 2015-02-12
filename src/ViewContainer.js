@@ -49,7 +49,7 @@ define(function(require, exports, module) {
         },
         origin: [0.5, 0.5],
         animations: {
-            slide: {
+            /*slide: {
                 enabled: false,
                 direction: 'top'
             },
@@ -64,7 +64,7 @@ define(function(require, exports, module) {
             zoom: {
                 enabled: false,
                 scale: [0.5, 0.5]
-            }
+            }*/
         }
     };
 
@@ -78,9 +78,9 @@ define(function(require, exports, module) {
                 return {transform: Transform.translate(show ? size[0] : -size[0], 0, 0)};
             case 'right':
                 return {transform: Transform.translate(show ? -size[0] : size[0], 0, 0)};
-            case 'top':
+            case 'up':
                 return {transform: Transform.translate(0, show ? size[1] : -size[1], 0)};
-            case 'bottom':
+            case 'down':
                 return {transform: Transform.translate(0, show ? -size[1] : size[1], 0)};
             }
         },
@@ -96,9 +96,9 @@ define(function(require, exports, module) {
                 return {transform: Transform.rotate(0, show ? Math.PI : -Math.PI, 0)};
             case 'right':
                 return {transform: Transform.rotate(0, show ? -Math.PI : Math.PI, 0)};
-            case 'top':
+            case 'up':
                 return {transform: Transform.rotate(show ? Math.PI : -Math.PI, 0, 0)};
-            case 'bottom':
+            case 'down':
                 return {transform: Transform.rotate(show ? -Math.PI : Math.PI, 0, 0)};
             }
         }
@@ -111,10 +111,13 @@ define(function(require, exports, module) {
     function ViewStackLayout(context, options) {
         var set = {
             size: context.size,
-            translate: [0, 0, 0]
+            translate: [0, 0, 0],
+            align: [0.5, 0.5],
+            origin: [0.5, 0.5]
         };
         var node = context.next();
         while (node) {
+            set.size = context.resolveSize(node, context.size);
             context.set(node, set);
             set.translate[2] += options.zIndexOffset;
             node = context.next();
@@ -231,11 +234,22 @@ define(function(require, exports, module) {
             }
         }
         if (index < 0) {
+            if (callback) {
+                callback();
+            }
             return this;
         }
         var item = this._viewStack[index];
         item.hide = true;
-        item.callback = callback;
+        item.callback = function() {
+            view.unpipe(this._eventOutput);
+            this._renderables.splice(index, 1);
+            this._viewStack.splice(index, 1);
+            this.layout.reflowLayout();
+            if (callback) {
+                callback();
+            }
+        }.bind(this);
         item.options = this.constructor.DEFAULT_OPTIONS;
         if (options) {
             item.options = Object.create(this.constructor.DEFAULT_OPTIONS);
@@ -243,11 +257,17 @@ define(function(require, exports, module) {
             optionsManager.setOptions(options);
         }
         this.layout.reflowLayout();
-        //show.view.unpipe(this._eventOutput);
-        //this._renderables.splice(index, 1);
-        //this._viewStack.splice(index, 1);
         return this;
     };
+
+    /**
+     * Get the number of views currently in the container.
+     *
+     * @return {Number} number of views
+     */
+    ViewContainer.prototype.getCount = function() {
+        return this._viewStack.length;
+    }
 
     module.exports = ViewContainer;
 });
