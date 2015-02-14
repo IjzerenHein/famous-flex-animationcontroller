@@ -27,7 +27,9 @@ define(function(require) {
 
     // create the main context
     var mainContext = Engine.createContext();
-    var viewContainer = new ViewContainer();
+    var viewContainer = new ViewContainer({
+        transition: {duration: 500}
+    });
     mainContext.add(viewContainer);
 
     // create views
@@ -36,34 +38,20 @@ define(function(require) {
     viewContainer.on('click', function() {
         console.log('click');
         viewContainer.hide(undefined, {
-            transition: {
-                duration: 200
-            },
             animations: {
-                slide: {
-                    enabled: true,
-                    direction: 'left'
-                },
-                fade: {
-                    enabled: true
-                }
-            }},
-            function() {
-                profileView = new ProfileView();
-                viewContainer.show(profileView, {
-                    origin: [0.5, 0.2],
-                    animations: {
-                        zoom: {
-                            enabled: true,
-                            scale: [0.8, 0.8]
-                        },
-                        fade: {
-                            enabled: true,
-                            opacity: 0.0
-                        }
-                    }
-                });
+                slide: 'left'
             }
-        );
+        });
+        profileView = new ProfileView({
+            imageScale: [0.3, 0.3, 1]
+        });
+        viewContainer.show(profileView, {
+            animations: {
+                slide: 'left'
+            },
+            transfer: {
+                'image': 'image'
+            }
+        });
     });
 });

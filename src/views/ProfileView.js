@@ -42,6 +42,7 @@ define(function(require, exports, module) {
     ProfileView.DEFAULT_OPTIONS = {
         classes: ['view', 'profile'],
         imageSize: [200, 200],
+        imageScale: [1, 1, 1],
         nameHeight: 60,
         profileText: 'Scarlett Johansson was born in New York City. Her mother, Melanie Sloan, is from an Ashkenazi Jewish family, and her father, Karsten Johansson, is Danish. Scarlett showed a passion for acting at a young age and starred in many plays.<br><br>She has a sister named Vanessa Johansson, a brother named Adrian, and a twin brother named Hunter Johansson born three minutes after her. She began her acting career starring as Laura Nelson in the comedy film North (1994).<br><br>The acclaimed drama film The Horse Whisperer (1998) brought Johansson critical praise and worldwide recognition. Following the film\'s success, she starred in many other films including the critically acclaimed cult film Ghost World (2001) and then the hit Lost in Translation (2003) with Bill Murray in which she again stunned critics. Later on, she appeared in the drama film Girl with a Pearl Earring (2003).'
     };
@@ -75,7 +76,8 @@ define(function(require, exports, module) {
                 });
                 var image = context.set('image', {
                     size: this.options.imageSize,
-                    translate: [(context.size[0] - this.options.imageSize[0]) / 2, 20, 0.001]
+                    translate: [(context.size[0] - this.options.imageSize[0]) / 2, 20, 0.001],
+                    scale: this.options.imageScale
                 });
                 var name = context.set('name', {
                     size: [context.size[0], this.options.nameHeight],
