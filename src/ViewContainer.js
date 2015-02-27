@@ -21,7 +21,6 @@ define(function(require, exports, module) {
     // import dependencies
     var View = require('famous/core/View');
     var LayoutController = require('famous-flex/LayoutController');
-    var Easing = require('famous/transitions/Easing');
     var Transform = require('famous/core/Transform');
     var Modifier = require('famous/core/Modifier');
     var StateModifier = require('famous/modifiers/StateModifier');
@@ -50,8 +49,7 @@ define(function(require, exports, module) {
     ViewContainer.DEFAULT_OPTIONS = {
         zIndexOffset: 0.1,
         transition: {
-            duration: 700,
-            curve: Easing.outBack
+            duration: 500
         },
         origin: [0.5, 0.5],
         animations: {
@@ -397,6 +395,7 @@ define(function(require, exports, module) {
         view = view || this._viewStack[index].view;
         item.hide = true;
         item.callback = function() {
+            index = this._viewStack.indexOf(item);
             view.unpipe(this._eventOutput);
             this._renderables.views.splice(index, 1);
             this._viewStack.splice(index, 1);
@@ -423,6 +422,24 @@ define(function(require, exports, module) {
      */
     ViewContainer.prototype.getCount = function() {
         return this._viewStack.length;
+    };
+
+    /**
+     * Removes all the views inside the container.
+     *
+     * @return {ViewContainer} this
+     */
+    ViewContainer.prototype.removeAll = function() {
+        for (var i = 0; i < this._viewStack.length; i++) {
+          if (this._viewStack[i].view) {
+            this._viewStack[i].view.unpipe(this._eventOutput);
+          }
+        }
+        this._renderables.views = [];
+        this._renderables.transferables = [];
+        this._viewStack = [];
+        this.layout.reflowLayout();
+        return this;
     };
 
     module.exports = ViewContainer;
