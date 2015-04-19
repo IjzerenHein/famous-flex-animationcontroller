@@ -54,7 +54,8 @@ define(function(require, exports, module) {
             }),
             image: new BkImageSurface({
                 classes: this.options.classes.concat(['image']),
-                content: require('../images/scarlett.jpg')
+                content: require('../images/scarlett.jpg'),
+                sizeMode: 'cover'
             }),
             name: new Surface({
                 classes: this.options.classes.concat(['name']),
@@ -76,16 +77,16 @@ define(function(require, exports, module) {
                 });
                 var image = context.set('image', {
                     size: this.options.imageSize,
-                    translate: [(context.size[0] - this.options.imageSize[0]) / 2, 20, 0.001],
+                    translate: [(context.size[0] - this.options.imageSize[0]) / 2, 20, 1],
                     scale: this.options.imageScale
                 });
                 var name = context.set('name', {
                     size: [context.size[0], this.options.nameHeight],
-                    translate: [0, image.size[1] + image.translate[1], 0.001]
+                    translate: [0, image.size[1] + image.translate[1], 1]
                 });
                 context.set('text', {
                     size: [context.size[0], context.size[1] - name.size[1] - name.translate[1]],
-                    translate: [0, name.translate[1] + name.size[1], 0.001]
+                    translate: [0, name.translate[1] + name.size[1], 1]
                 });
             }.bind(this),
             dataSource: this._renderables

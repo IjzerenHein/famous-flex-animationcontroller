@@ -7,12 +7,13 @@ body, div {
  	-webkit-user-select: none;
  	-ms-user-select: none;
  	user-select: none;
-}
-
-.view.profile.background {
   background-color: #FAFAFA;
 }
-.view.profile.image {
+
+.view.background {
+  background-color: #FAFAFA;
+}
+.view.image {
   border-radius: 50%;
 }
 .view.profile.name > div {

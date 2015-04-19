@@ -8,8 +8,8 @@
  * @copyright Gloey Apps, 2015
  */
 
-/*global define, moment, console*/
-/*eslint no-use-before-define:0, no-console:0*/
+/*global console */
+/*eslint no-console:0 */
 
 define(function(require) {
 
@@ -22,36 +22,47 @@ define(function(require) {
 
     // import dependencies
     var Engine = require('famous/core/Engine');
-    var ViewContainer = require('./ViewContainer');
+    var AnimationController = require('./AnimationController');
     var ProfileView = require('./views/ProfileView');
+    var FullImageView = require('./views/FullImageView');
+    var Easing = require('famous/transitions/Easing');
+    //var RenderController = require('famous/views/RenderController');
 
     // create the main context
     var mainContext = Engine.createContext();
-    var viewContainer = new ViewContainer({
-        transition: {duration: 500}
-    });
-    mainContext.add(viewContainer);
-
-    // create views
-    var profileView = new ProfileView();
-    viewContainer.show(profileView);
-    viewContainer.on('click', function() {
-        console.log('click');
-        viewContainer.hide(undefined, {
-            animations: {
-                slide: 'left'
-            }
-        });
-        profileView = new ProfileView({
-            imageScale: [0.3, 0.3, 1]
-        });
-        viewContainer.show(profileView, {
-            animations: {
-                slide: 'left'
-            },
-            transfer: {
+    var animationController = new AnimationController({
+        transition: {duration: 400, curve: Easing.outBack},
+        animations: {
+            slide: 'left'
+            //fade: 0,
+            //flip: 'right'
+            //zoom: [0.5, 0.5]
+        },
+        transfer: {
+            transition: {duration: 400, curve: Easing.inOutExpo},
+            items: {
                 'image': 'image'
             }
-        });
+        }
+    });
+    //animationController = new RenderController();
+    mainContext.add(animationController);
+
+    // create views
+    var viewIndex = 0;
+    animationController.show(new FullImageView());
+    animationController.on('click', function() {
+        console.log('click');
+        var view;
+        viewIndex++;
+        switch (viewIndex % 2) {
+            case 0:
+                view = new FullImageView();
+                break;
+            case 1:
+                view = new ProfileView();
+                break;
+        }
+        animationController.show(view);
     });
 });
