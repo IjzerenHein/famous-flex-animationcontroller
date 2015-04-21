@@ -50,19 +50,28 @@ define(function(require) {
 
     // create views
     var viewIndex = 0;
-    animationController.show(new FullImageView());
-    animationController.on('click', function() {
+    var view = new FullImageView();
+    view.on('click', _onClick);
+    animationController.show(view);
+    animationController.show(view);
+    animationController.show(view);
+    function _onClick() {
         console.log('click');
-        var view;
-        viewIndex++;
-        switch (viewIndex % 2) {
-            case 0:
-                view = new FullImageView();
-                break;
-            case 1:
-                view = new ProfileView();
-                break;
+        for (var i = 0; i < 3; i++) {
+            viewIndex++;
+            switch (viewIndex % 2) {
+                case 0:
+                    view = new FullImageView();
+                    break;
+                case 1:
+                    view = new ProfileView();
+                    break;
+            }
+            view.on('click', _onClick);
+            //animationController.halt();
+            animationController.show(view);
         }
-        animationController.show(view);
-    });
+        //animationController.halt();
+        //animationController.hide();
+    }
 });

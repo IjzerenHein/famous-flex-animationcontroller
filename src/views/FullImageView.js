@@ -33,8 +33,7 @@ define(function(require, exports, module) {
 
     FullImageView.DEFAULT_OPTIONS = {
         classes: ['view', 'fullImage'],
-        margins: [20, 20, 20, 20],
-        size: [200, 200]
+        margins: [20, 20, 20, 20]
     };
 
     function _createRenderables() {
