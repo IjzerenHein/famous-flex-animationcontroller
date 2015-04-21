@@ -7,6 +7,8 @@ body, div {
  	-webkit-user-select: none;
  	-ms-user-select: none;
  	user-select: none;
+}
+body {
   background-color: #FAFAFA;
 }
 
@@ -16,7 +18,7 @@ body, div {
 .view.image {
   border-radius: 50%;
 }
-.view.profile.name > div {
+.view.navbar.title > div, .view.profile.name > div {
   text-align: center;
   font-size: 20px;
   color: #444444;
@@ -34,4 +36,11 @@ body, div {
   padding: 0 25px;
   font-size: 16px;
   color: #888888;
+}
+.view.navbar.title > div {
+  color: #666666;
+}
+.view.navbar.background {
+  background-color: #EEEEEE;
+  border-bottom: 1px solid #DDDDDD;
 }

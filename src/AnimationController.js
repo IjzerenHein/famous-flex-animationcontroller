@@ -67,7 +67,8 @@ define(function(require, exports, module) {
         },
         zIndexOffset: {
             views: 1
-        }
+        },
+        transferIdSeparator: '.'
     };
 
     var ItemState = {
@@ -178,24 +179,52 @@ define(function(require, exports, module) {
     }
 
     /**
+     * Gets the delegate through which we can get/replace
+     * renderables inside the view.
+     */
+    function _getViewDelegate(view, id) {
+        if (view.getSpec && view.get && view.replace) {
+            if (view.get(id) !== undefined) {
+                return view;
+            }
+            else if (this.options.transferIdSeparator && (id.indexOf(this.options.transferIdSeparator) >= 0)) {
+                var ids = id.split(this.options.transferIdSeparator);
+                var idIndex = 0;
+                view = _getViewDelegate(view, ids[idIndex]);
+                while (view && (idIndex < (ids.length - 1))) {
+                    idIndex++;
+                    view = _getViewDelegate(view, ids[idIndex]);
+                }
+                return view;
+            }
+        }
+        if (view.layout) {
+            return _getViewDelegate.call(this, view.layout, id);
+        }
+    }
+
+    /**
      * Helper function that gets the spec from a view.
      */
     function _viewGetSpec(view, id) {
-        return view.layout.getSpec(id);
+        var delegate =_getViewDelegate.call(this, view, id);
+        return delegate ? delegate.getSpec(id) : undefined;
     }
 
     /**
      * Helper function that gets the renderable from a view.
      */
     function _viewGet(view, id) {
-        return view.layout.get(id);
+        var delegate =_getViewDelegate.call(this, view, id);
+        return delegate ? delegate.get(id) : undefined;
     }
 
     /**
      * Helper function that replaces a renderable in a view.
      */
     function _viewReplace(view, id, renderable) {
-        return view.layout.replace(id, renderable);
+        var delegate =_getViewDelegate.call(this, view, id);
+        return delegate ? delegate.replace(id, renderable) : undefined;
     }
 
     /**
@@ -203,11 +232,11 @@ define(function(require, exports, module) {
      */
     function _waitForSettledSpec(context) {
         if (!context.item.view) {
-            return Timer.clear(context.fn);
+            return Timer.clear(context.timer);
         }
-        var spec = _viewGetSpec(context.item.view, context.id);
+        var spec = _viewGetSpec.call(this, context.item.view, context.id);
         if (spec) {
-            Timer.clear(context.fn);
+            Timer.clear(context.timer);
             return context.callback(spec);
         }
     }
@@ -235,17 +264,17 @@ define(function(require, exports, module) {
     function _startTransferableAnimations(item, prevItem) {
         for (var sourceId in item.options.transfer.items) {
             var targetId = item.options.transfer.items[sourceId];
-            var sourceSpec = _viewGetSpec(prevItem.view, sourceId);
-            var targetRenderable = _viewGet(item.view, targetId);
+            var sourceSpec = _viewGetSpec.call(this, prevItem.view, sourceId);
+            var targetRenderable = _viewGet.call(this, item.view, targetId);
             if (sourceSpec && targetRenderable) {
 
                 // Replace source & target renderables in the views
                 // source: dummy-node
                 // target: target-renderable with opacity: 0.
-                var sourceRenderable = _viewReplace(prevItem.view, sourceId, new RenderNode(new Modifier(sourceSpec)));
+                var sourceRenderable = _viewReplace.call(this, prevItem.view, sourceId, new RenderNode(new Modifier(sourceSpec)));
                 var targetNode = new RenderNode(new Modifier({opacity: 0}));
                 targetNode.add(targetRenderable);
-                targetRenderable = _viewReplace(item.view, targetId, targetNode);
+                targetRenderable = _viewReplace.call(this, item.view, targetId, targetNode);
 
                 // Take ownership of the source renderable.
                 // This renderable will be layouted by the layout-function
@@ -274,8 +303,7 @@ define(function(require, exports, module) {
                     id: targetId,
                     callback: _animateTransferable.bind(this, mod, item.options.transfer.transition, sourceSpec)
                 };
-                waitContext.fn = _waitForSettledSpec.bind(this, waitContext);
-                Timer.every(waitContext.fn, 1);
+                waitContext.timer = Timer.every(_waitForSettledSpec.bind(this, waitContext), 1);
             }
         }
     }
@@ -296,8 +324,8 @@ define(function(require, exports, module) {
                     break;
                 }
             }
-            _viewReplace(transferable.sourceView, transferable.sourceId, transferable.sourceRenderable);
-            _viewReplace(item.view, transferable.targetId, transferable.targetRenderable);
+            _viewReplace.call(this, transferable.sourceView, transferable.sourceId, transferable.sourceRenderable);
+            _viewReplace.call(this, item.view, transferable.targetId, transferable.targetRenderable);
         }
         item.transferables = {};
         this.layout.reflowLayout();

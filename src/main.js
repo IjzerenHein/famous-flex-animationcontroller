@@ -25,13 +25,15 @@ define(function(require) {
     var AnimationController = require('./AnimationController');
     var ProfileView = require('./views/ProfileView');
     var FullImageView = require('./views/FullImageView');
+    var NavBarView = require('./views/NavBarView');
     var Easing = require('famous/transitions/Easing');
     //var RenderController = require('famous/views/RenderController');
 
     // create the main context
     var mainContext = Engine.createContext();
+    var animationType = 'slide';
     var animationController = new AnimationController({
-        transition: {duration: 400, curve: Easing.outBack},
+        transition: {duration: 1000, curve: Easing.outBack},
         animations: {
             slide: 'left'
             //fade: 0,
@@ -39,7 +41,8 @@ define(function(require) {
             //zoom: [0.5, 0.5]
         },
         transfer: {
-            transition: {duration: 400, curve: Easing.inOutExpo},
+            transition: {duration: 1000, curve: Easing.inOutExpo},
+            zIndez: 1000,
             items: {
                 'image': 'image'
             }
@@ -53,25 +56,45 @@ define(function(require) {
     var view = new FullImageView();
     view.on('click', _onClick);
     animationController.show(view);
-    animationController.show(view);
-    animationController.show(view);
     function _onClick() {
-        console.log('click');
-        for (var i = 0; i < 3; i++) {
+        //console.log('click');
+        for (var i = 0; i < 1; i++) {
             viewIndex++;
-            switch (viewIndex % 2) {
+            switch (viewIndex % 4) {
                 case 0:
                     view = new FullImageView();
+                    animationController.show(view);
                     break;
                 case 1:
                     view = new ProfileView();
+                    animationController.show(view);
+                    break;
+                case 2:
+                    view = new NavBarView({
+                        left: false
+                    });
+                    animationController.show(view);
+                    break;
+                case 3:
+                    view = new NavBarView({
+                        left: true
+                    });
+                    animationController.show(view, {
+                        transfer: {
+                            transition: {duration: 1000, curve: Easing.outBack}
+                        }
+                    });
+                    var animations = {
+                        slide: 'none',
+                        flip: 'none'
+                    };
+                    if (animationType === 'slide') {
+                        animations.flip = 'left';
+                    }
+                    animationController.setOptions({animations: animations});
                     break;
             }
             view.on('click', _onClick);
-            //animationController.halt();
-            animationController.show(view);
         }
-        //animationController.halt();
-        //animationController.hide();
     }
 });
