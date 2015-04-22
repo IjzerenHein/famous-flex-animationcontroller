@@ -35,7 +35,7 @@ define(function(require) {
     var animationController = new AnimationController({
         transition: {duration: 1000, curve: Easing.outBack},
         animations: {
-            slide: 'left'
+            slide: 'up'
             //fade: 0,
             //flip: 'right'
             //zoom: [0.5, 0.5]
@@ -88,9 +88,9 @@ define(function(require) {
                         slide: 'none',
                         flip: 'none'
                     };
-                    if (animationType === 'slide') {
-                        animations.flip = 'left';
-                    }
+                    //if (animationType === 'slide') {
+                        //animations.flip = 'left';
+                    //}
                     animationController.setOptions({animations: animations});
                     break;
             }
