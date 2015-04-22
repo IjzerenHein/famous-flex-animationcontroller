@@ -8,9 +8,6 @@
  * @copyright Gloey Apps, 2015
  */
 
-/*global console */
-/*eslint no-console:0 */
-
 define(function(require) {
 
     //<webpack>
@@ -52,7 +49,6 @@ define(function(require) {
     view.on('click', _onClick);
     animationController.show(view);
     function _onClick() {
-        //console.log('click');
         for (var i = 0; i < 1; i++) {
             viewIndex++;
             switch (viewIndex % 4) {

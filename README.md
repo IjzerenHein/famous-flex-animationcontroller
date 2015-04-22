@@ -1,19 +1,17 @@
-famous-flex-viewcontainer
+famous-flex-animationcontroller
 ==========
-
-## Work in progress, check back later
 
 Animating from one famo.us view to another in awesome ways
 
 ![Screenshot](screenshot.gif)
 
 
-[View the live demo here](https://rawgit.com/IjzerenHein/famous-flex-viewcontainer/master/dist/index.html)
+[View the live demo here](https://rawgit.com/IjzerenHein/famous-flex-animationcontroller/master/dist/index.html)
 
 
 ## Tutorial
 
--	[ViewContainer Tutorial](./tutorial/ViewContainer.md)
+-	[AnimationController Tutorial](./tutorial/AnimationController.md)
 
 
 ## Examples

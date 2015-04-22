@@ -23,7 +23,7 @@ module.exports = function(grunt) {
           authKey: 'gloey.nl'
         },
         src: 'dist',
-        dest: '/domains/gloey.nl/htdocs/www/apps/viewcontainer'
+        dest: '/domains/gloey.nl/htdocs/www/apps/animationcontroller'
       }
     },
     exec: {
