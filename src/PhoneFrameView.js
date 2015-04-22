@@ -48,7 +48,7 @@ define(function(require, exports, module) {
             image: new BkImageSurface({
                 classes: this.options.classes.concat(['image']),
                 content: require('./images/iphone.png'),
-                sizeMode: 'cover'
+                sizeMode: 'contain'
             }),
             left: new Surface({
                 classes: this.options.classes.concat(['background'])
@@ -75,7 +75,9 @@ define(function(require, exports, module) {
         this.layout = new LayoutController({
             autoPipeEvents: true,
             layout: function(context, options) {
-                if (isMobile.phone || (context.size[0] < this.options.imageSize[0]) || (context.size[1] < this.options.imageSize[1])) {
+                // full screen
+                if (isMobile.phone || (((context.size[0] < this.options.imageSize[0]) || (context.size[1] < this.options.imageSize[1])) &&
+                    !((context.size[0] < this.options.imageSize[1]) && (context.size[1] < this.options.imageSize[0])))) {
                     context.set('content', {
                         size: context.size,
                         translate: [0, 0, 1]
@@ -89,43 +91,68 @@ define(function(require, exports, module) {
                         translate: [0, 0, 100]
                     });
                 }
-                else {
-                    var image = context.set('image', {
-                        size: this.options.imageSize,
-                        translate: [(context.size[0] - this.options.imageSize[0]) / 2, (context.size[1] - this.options.imageSize[1]) / 2, 100]
-                    });
-                    context.set('left', {
-                        size: [image.translate[0] + this.options.innerMargins[3], context.size[1]],
-                        translate: [0, 0, 99]
-                    });
-                    context.set('right', {
-                        size: [context.size[0] - image.translate[0] - image.size[0] + this.options.innerMargins[1], context.size[1]],
-                        translate: [image.translate[0] + image.size[0] - this.options.innerMargins[1], 0, 99]
-                    });
-                    context.set('top', {
-                        size: [context.size[0], image.translate[1] + this.options.innerMargins[0]],
-                        translate: [0, 0, 99]
-                    });
-                    context.set('bottom', {
-                        size: [context.size[0], context.size[1] - image.translate[1] - image.size[1] + this.options.innerMargins[2]],
-                        translate: [0, image.translate[1] + image.size[1] - this.options.innerMargins[2], 99]
-                    });
-                    var content = context.set('content', {
-                        size: [
-                            this.options.imageSize[0] - this.options.innerMargins[1] - this.options.innerMargins[3],
-                            this.options.imageSize[1] - this.options.innerMargins[0] - this.options.innerMargins[2]
-                        ],
-                        translate: [
-                            image.translate[0] + this.options.innerMargins[3],
-                            image.translate[1] + this.options.innerMargins[0],
-                            1
-                        ]
-                    });
-                    context.set('inner', {
-                        size: content.size,
-                        translate: [content.translate[0], content.translate[1], 0]
-                    });
+                // portrait
+                var imageSize;
+                var margins;
+                var rotate;
+                if ((context.size[0] >= this.options.imageSize[0]) && (context.size[1] >= this.options.imageSize[1])) {
+                    imageSize = this.options.imageSize;
+                    margins = this.options.innerMargins;
+                    rotate = [0, 0, 0];
                 }
+                else {
+                    imageSize = [this.options.imageSize[1], this.options.imageSize[0]];
+                    margins = [
+                        this.options.innerMargins[1],
+                        this.options.innerMargins[2],
+                        this.options.innerMargins[3],
+                        this.options.innerMargins[0]
+                    ];
+                    rotate = [0, 0, -Math.PI / 2];
+                }
+                context.set('image', {
+                    size: this.options.imageSize,
+                    translate: [0, 0, 100],
+                    rotate: rotate,
+                    origin: [0.5, 0.5],
+                    align: [0.5, 0.5]
+                });
+                var imageTranslate = [
+                    (context.size[0] - imageSize[0]) / 2,
+                    (context.size[1] - imageSize[1]) / 2,
+                    100
+                ];
+                context.set('left', {
+                    size: [imageTranslate[0] + margins[3], context.size[1]],
+                    translate: [0, 0, 99]
+                });
+                context.set('right', {
+                    size: [context.size[0] - imageTranslate[0] - imageSize[0] + margins[1], context.size[1]],
+                    translate: [imageTranslate[0] + imageSize[0] - margins[1], 0, 99]
+                });
+                context.set('top', {
+                    size: [context.size[0], imageTranslate[1] + margins[0]],
+                    translate: [0, 0, 99]
+                });
+                context.set('bottom', {
+                    size: [context.size[0], context.size[1] - imageTranslate[1] - imageSize[1] + margins[2]],
+                    translate: [0, imageTranslate[1] + imageSize[1] - margins[2], 99]
+                });
+                var content = context.set('content', {
+                    size: [
+                        imageSize[0] - margins[1] - margins[3],
+                        imageSize[1] - margins[0] - margins[2]
+                    ],
+                    translate: [
+                        imageTranslate[0] + margins[3],
+                        imageTranslate[1] + margins[0],
+                        1
+                    ]
+                });
+                context.set('inner', {
+                    size: content.size,
+                    translate: [content.translate[0], content.translate[1], 0]
+                });
             }.bind(this),
             dataSource: this._renderables
         });
