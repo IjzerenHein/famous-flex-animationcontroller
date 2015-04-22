@@ -42,27 +42,63 @@ define(function(require, exports, module) {
     AnimationController.prototype = Object.create(View.prototype);
     AnimationController.prototype.constructor = AnimationController;
 
+    /**
+     * Out of the box supported animations.
+     */
+    AnimationController.Animation = {
+        Slide: {
+            Left: function(show, size) {
+                return {transform: Transform.translate(show ? size[0] : -size[0], 0, 0)};
+            },
+            Right: function(show, size) {
+                return {transform: Transform.translate(show ? -size[0] : size[0], 0, 0)};
+            },
+            Up: function(show, size) {
+                return {transform: Transform.translate(0, show ? size[1] : -size[1], 0)};
+            },
+            Down: function(show, size) {
+                return {transform: Transform.translate(0, show ? -size[1] : size[1], 0)};
+            }
+        },
+        Fade: function(show, size, opacity) {
+            return {opacity: (opacity === undefined) ? 0 : opacity};
+        },
+        Zoom: function(show, size, scale) {
+            return {transform: Transform.scale(scale ? scale[0] : 0.5, scale ? scale[1] : 0.5, 1)};
+        },
+        Flip: {
+            Left: function(show, size) {
+                return {transform: Transform.rotate(0, show ? Math.PI : -Math.PI, 0)};
+            },
+            Right: function(show, size) {
+                return {transform: Transform.rotate(0, show ? -Math.PI : Math.PI, 0)};
+            },
+            Up: function(show, size) {
+                return {transform: Transform.rotate(show ? Math.PI : -Math.PI, 0, 0)};
+            },
+            Down: function(show, size) {
+                return {transform: Transform.rotate(show ? -Math.PI : Math.PI, 0, 0)};
+            }
+        }
+    };
+
     AnimationController.DEFAULT_OPTIONS = {
         transition: {duration: 400, curve: Easing.outBack},
-        animations: {
-            //slide: 'left'
-            //fade: 0,
-            //flip: 'top',
-            //zoom: [0, 0]
-        },
+        animation: AnimationController.Animation.Slide.Left,
         show: {
             // transition,
-            // animations
+            // animation
         },
         hide: {
             // transition,
-            // animations
+            // animation
         },
         transfer: {
             zIndex: 10 // z-index offset the items are translated while transferring
             // transition,
             // items: {
             //   'image': 'image'
+            //   'image': ['image', 'image2']
             // }
         },
         zIndexOffset: {
@@ -79,42 +115,6 @@ define(function(require, exports, module) {
         SHOWING: 4,
         VISIBLE: 5,
         QUEUED: 6
-    };
-
-    /**
-     * Out of the box supported animations.
-     */
-    AnimationController.animations = {
-        slide: function(show, value, size) {
-            switch (value) {
-            case 'left':
-                return {transform: Transform.translate(show ? size[0] : -size[0], 0, 0)};
-            case 'right':
-                return {transform: Transform.translate(show ? -size[0] : size[0], 0, 0)};
-            case 'up':
-                return {transform: Transform.translate(0, show ? size[1] : -size[1], 0)};
-            case 'down':
-                return {transform: Transform.translate(0, show ? -size[1] : size[1], 0)};
-            }
-        },
-        fade: function(show, value, size) {
-            return {opacity: value};
-        },
-        zoom: function(show, value, size) {
-            return {transform: Transform.scale(value[0], value[1], 1)};
-        },
-        flip: function(show, value, size) {
-            switch (value) {
-            case 'left':
-                return {transform: Transform.rotate(0, show ? Math.PI : -Math.PI, 0)};
-            case 'right':
-                return {transform: Transform.rotate(0, show ? -Math.PI : Math.PI, 0)};
-            case 'up':
-                return {transform: Transform.rotate(show ? Math.PI : -Math.PI, 0, 0)};
-            case 'down':
-                return {transform: Transform.rotate(show ? -Math.PI : Math.PI, 0, 0)};
-            }
-        }
     };
 
     /**
@@ -143,8 +143,8 @@ define(function(require, exports, module) {
 
                     // Layout any transferables
                     for (var j = 0; j < transferables.length; j++) {
-                        for (var key in item.transferables) {
-                            if (transferables[j].renderNode === item.transferables[key].renderNode) {
+                        for (var k = 0; k < item.transferables.length; k++) {
+                            if (transferables[j].renderNode === item.transferables[k].renderNode) {
                                 context.set(transferables[j], {
                                     translate: [0, 0, set.translate[2]],
                                     size: [context.size[0], context.size[1]]
@@ -223,18 +223,14 @@ define(function(require, exports, module) {
      * Gets the transferable delegate for the given id.
      */
     function _getTransferable(item, view, id) {
-        var transferable;
         // 1. If view supports getTransferable, use that
         if (view.getTransferable) {
-            transferable = view.getTransferable(id);
-            if (transferable) {
-                return transferable;
-            }
+            return view.getTransferable(id);
         }
         // 2. If view is derived from layoutcontroller, use that
         if (view.getSpec && view.get && view.replace) {
             if (view.get(id) !== undefined) {
-                transferable = {
+                return {
                     get: function() {
                         return view.get(id);
                     },
@@ -243,7 +239,6 @@ define(function(require, exports, module) {
                     },
                     getSpec: _getViewSpec.bind(this, item, view, id)
                 };
-                return transferable;
             }
         }
         // 3. If view has an embedded layout, use that as fallback
@@ -262,10 +257,20 @@ define(function(require, exports, module) {
         }
     }
     function _startTransferableAnimation(item, prevItem, sourceId) {
-        var targetId = item.options.transfer.items[sourceId];
+        var target = item.options.transfer.items[sourceId];
         var transferable = {};
         transferable.source = _getTransferable.call(this, prevItem, prevItem.view, sourceId);
-        transferable.target = _getTransferable.call(this, item, item.view, targetId);
+        if (Array.isArray(target)) {
+            for (var i = 0; i < target.length; i++) {
+                transferable.target = _getTransferable.call(this, item, item.view, target[i]);
+                if (transferable.target) {
+                    break;
+                }
+            }
+        }
+        else {
+            transferable.target = _getTransferable.call(this, item, item.view, target);
+        }
         if (transferable.source && transferable.target) {
             transferable.source.getSpec(function(sourceSpec) {
 
@@ -287,7 +292,7 @@ define(function(require, exports, module) {
                 var mod = new StateModifier(sourceSpec);
                 transferable.renderNode = new RenderNode(zIndexMod);
                 transferable.renderNode.add(mod).add(transferable.originalSource);
-                item.transferables[targetId] = transferable;
+                item.transferables.push(transferable);
                 this._renderables.transferables.push(transferable.renderNode);
                 this.layout.reflowLayout();
 
@@ -317,8 +322,8 @@ define(function(require, exports, module) {
      * the renderables to their original views.
      */
     function _endTransferableAnimations(item) {
-        for (var key in item.transferables) {
-            var transferable = item.transferables[key];
+        for (var j = 0; j < item.transferables.length; j++) {
+            var transferable = item.transferables[j];
             for (var i = 0; i < this._renderables.transferables.length; i++) {
                 if (this._renderables.transferables[i] === transferable.renderNode) {
                     this._renderables.transferables.splice(i, 1);
@@ -328,7 +333,7 @@ define(function(require, exports, module) {
             transferable.source.show(transferable.originalSource);
             transferable.target.show(transferable.originalTarget);
         }
-        item.transferables = {};
+        item.transferables = [];
         this.layout.reflowLayout();
     }
 
@@ -361,25 +366,23 @@ define(function(require, exports, module) {
     function _startAnimation(item, prevItem, size, show) {
         var transform;
         var opacity;
-        var animations = show ? item.options.show.animations : item.options.hide.animations;
-        for (var key in animations) {
-            if (animations[key] !== undefined) {
-                var result = AnimationController.animations[key](show, animations[key], size);
-                if (result && result.transform) {
-                    if (transform) {
-                        transform = Transform.multiply(transform, result.transform);
-                    }
-                    else {
-                        transform = result.transform;
-                    }
+        var animation = show ? item.options.show.animation : item.options.hide.animation;
+        if (animation) {
+            var result = animation(show, size);
+            if (result && result.transform) {
+                if (transform) {
+                    transform = Transform.multiply(transform, result.transform);
                 }
-                if (result && (result.opacity !== undefined)) {
-                    if (opacity !== undefined) {
-                        opacity *= result.opacity;
-                    }
-                    else {
-                        opacity = result.opacity;
-                    }
+                else {
+                    transform = result.transform;
+                }
+            }
+            if (result && (result.opacity !== undefined)) {
+                if (opacity !== undefined) {
+                    opacity *= result.opacity;
+                }
+                else {
+                    opacity = result.opacity;
                 }
             }
         }
@@ -431,11 +434,11 @@ define(function(require, exports, module) {
             options: {
                 show: {
                     transition: this.options.show.transition || this.options.transition,
-                    animations: this.options.show.animations || this.options.animations
+                    animation: this.options.show.animation || this.options.animation
                 },
                 hide: {
                     transition: this.options.hide.transition || this.options.transition,
-                    animations: this.options.hide.animations || this.options.animations
+                    animation: this.options.hide.animation || this.options.animation
                 },
                 transfer: {
                     transition: this.options.transfer.transition || this.options.transition,
@@ -444,13 +447,13 @@ define(function(require, exports, module) {
                 }
             },
             callback: callback,
-            transferables: {} // renderables currently being transfered
+            transferables: [] // renderables currently being transfered
         };
         if (options) {
             item.options.show.transition = (options.show ? options.show.transition : undefined) || options.transition || item.options.show.transition;
-            item.options.show.animations = (options.show ? options.show.animations : undefined) || options.animations || item.options.show.animations;
+            item.options.show.animation = (options.show ? options.show.animation : undefined) || options.animation || item.options.show.animation;
             item.options.hide.transition = (options.hide ? options.hide.transition : undefined) || options.transition || item.options.hide.transition;
-            item.options.hide.animations = (options.hide ? options.hide.animations : undefined) || options.animations || item.options.hide.animations;
+            item.options.hide.animation = (options.hide ? options.hide.animation : undefined) || options.animation || item.options.hide.animation;
             item.options.transfer.transition = (options.transfer ? options.transfer.transition : undefined) || options.transition || item.options.transfer.transition;
             item.options.transfer.items = (options.transfer ? options.transfer.items : undefined) || item.options.transfer.items;
             item.options.transfer.zIndex = (options.transfer && (options.transfer.zIndex !== undefined)) ? options.transfer.zIndex : item.options.transfer.zIndex;
@@ -547,7 +550,7 @@ define(function(require, exports, module) {
         item.hide = true;
         if (options) {
             item.options.hide.transition = (options.hide ? options.hide.transition : undefined) || options.transition || item.options.hide.transition;
-            item.options.hide.animations = (options.hide ? options.hide.animations : undefined) || options.animations || item.options.hide.animations;
+            item.options.hide.animation = (options.hide ? options.hide.animation : undefined) || options.animation || item.options.hide.animation;
         }
         item.hideCallback = function() {
             var index = this._viewStack.indexOf(item);

@@ -67,7 +67,7 @@ define(function(require, exports, module) {
                 classes: this.options.classes.concat(['navbar', 'title']),
                 content: '<div>' + 'Scarlett Johansson' + '</div>'
             }),
-            image: new BkImageSurface({
+            navBarImage: new BkImageSurface({
                 classes: this.options.classes.concat(['navbar', 'image']),
                 content: require('../images/scarlett.jpg'),
                 sizeMode: 'cover'
@@ -90,7 +90,7 @@ define(function(require, exports, module) {
                     size: [context.size[0], this.options.navBar.height],
                     translate: [0, 0, 2]
                 });
-                context.set('image', {
+                context.set('navBarImage', {
                     size: [32, 32],
                     translate: [this.options.left ? 20 : (context.size[0] - 20 - 32), 9, 2]
                 });

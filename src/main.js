@@ -31,20 +31,15 @@ define(function(require) {
 
     // create the main context
     var mainContext = Engine.createContext();
-    var animationType = 'slide';
     var animationController = new AnimationController({
         transition: {duration: 1000, curve: Easing.outBack},
-        animations: {
-            slide: 'up'
-            //fade: 0,
-            //flip: 'right'
-            //zoom: [0.5, 0.5]
-        },
+        animation: AnimationController.Animation.Slide.Left,
         transfer: {
             transition: {duration: 1000, curve: Easing.inOutExpo},
             zIndez: 1000,
             items: {
-                'image': 'image'
+                'image': ['image', 'navBarImage'],
+                'navBarImage': ['image', 'navBarImage']
             }
         }
     });
@@ -84,14 +79,6 @@ define(function(require) {
                             transition: {duration: 1000, curve: Easing.outBack}
                         }
                     });
-                    var animations = {
-                        slide: 'none',
-                        flip: 'none'
-                    };
-                    //if (animationType === 'slide') {
-                        //animations.flip = 'left';
-                    //}
-                    animationController.setOptions({animations: animations});
                     break;
             }
             view.on('click', _onClick);
