@@ -25,6 +25,8 @@ define(function(require) {
     var NavBarView = require('./views/NavBarView');
     var Easing = require('famous/transitions/Easing');
     var PhoneFrameView = require('./PhoneFrameView');
+    var FastClick = require('fastclick/lib/fastclick');
+    FastClick.attach(document.body);
     //var RenderController = require('famous/views/RenderController');
 
     // create the main context
