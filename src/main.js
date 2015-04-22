@@ -24,10 +24,13 @@ define(function(require) {
     var FullImageView = require('./views/FullImageView');
     var NavBarView = require('./views/NavBarView');
     var Easing = require('famous/transitions/Easing');
+    var PhoneFrameView = require('./PhoneFrameView');
     //var RenderController = require('famous/views/RenderController');
 
     // create the main context
     var mainContext = Engine.createContext();
+    var phoneFrameView = new PhoneFrameView();
+    mainContext.add(phoneFrameView);
     var animationController = new AnimationController({
         transition: {duration: 1000, curve: Easing.outBack},
         animation: AnimationController.Animation.Slide.Left,
@@ -41,12 +44,14 @@ define(function(require) {
         }
     });
     //animationController = new RenderController();
-    mainContext.add(animationController);
+    phoneFrameView.setContent(animationController);
 
     // create views
     var viewIndex = 0;
-    var view = new FullImageView();
-    view.on('click', _onClick);
+    var view = new FullImageView({
+        text: 'Click to animate'
+    });
+    phoneFrameView.on('click', _onClick);
     animationController.show(view);
     function _onClick() {
         for (var i = 0; i < 1; i++) {
@@ -77,7 +82,6 @@ define(function(require) {
                     });
                     break;
             }
-            view.on('click', _onClick);
         }
     }
 });

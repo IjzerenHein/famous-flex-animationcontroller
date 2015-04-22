@@ -33,7 +33,8 @@ define(function(require, exports, module) {
 
     FullImageView.DEFAULT_OPTIONS = {
         classes: ['view', 'fullImage'],
-        margins: [20, 20, 20, 20]
+        margins: [20, 20, 20, 20],
+        textHeight: 30
     };
 
     function _createRenderables() {
@@ -45,6 +46,10 @@ define(function(require, exports, module) {
                 classes: this.options.classes.concat(['image']),
                 content: require('../images/scarlett.jpg'),
                 sizeMode: 'cover'
+            }),
+            text: new Surface({
+                classes: this.options.classes.concat(['text']),
+                content: this.options.text
             })
         };
     }
@@ -69,6 +74,10 @@ define(function(require, exports, module) {
                 context.set('image', {
                     size: imageSize,
                     translate: [(context.size[0] - imageSize[0]) / 2, (context.size[1] - imageSize[1]) / 2, 1]
+                });
+                context.set('text', {
+                    size: [context.size[0], this.options.textHeight],
+                    translate: [0, context.size[1] - this.options.textHeight, 1]
                 });
             }.bind(this),
             dataSource: this._renderables

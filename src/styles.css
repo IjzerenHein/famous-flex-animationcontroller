@@ -9,6 +9,13 @@ body, div {
  	user-select: none;
 }
 body {
+  background-color: #333333;
+}
+
+.frame.background {
+  background-color: #333333;
+}
+.frame.background.inner {
   background-color: #FAFAFA;
 }
 
@@ -18,9 +25,14 @@ body {
 .view.image {
   border-radius: 50%;
 }
+.view.text {
+  text-align: center;
+  font-size: 16px;
+}
+
 .view.navbar.title > div, .view.profile.name > div {
   text-align: center;
-  font-size: 20px;
+  font-size: 18px;
   color: #444444;
   /* align vertical */
   display: block;
