@@ -19,7 +19,7 @@ define(function(require) {
 
     // import dependencies
     var Engine = require('famous/core/Engine');
-    var AnimationController = require('./AnimationController');
+    var AnimationController = require('famous-flex/AnimationController');
     var ProfileView = require('./views/ProfileView');
     var FullImageView = require('./views/FullImageView');
     var NavBarView = require('./views/NavBarView');
