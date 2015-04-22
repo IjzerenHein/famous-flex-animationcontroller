@@ -74,6 +74,19 @@ define(function(require, exports, module) {
     function _createLayout() {
         this.layout = new LayoutController({
             autoPipeEvents: true,
+            /*flow: true,
+            flowOptions: {
+                properties: {
+                    size: false,
+                    opacity: false,
+                    align: false,
+                    origin: false,
+                    translate: false,
+                    rotate: true,
+                    scale: false,
+                    skew: false
+                }
+            },*/
             layout: function(context, options) {
                 // full screen
                 if (isMobile.phone || (((context.size[0] < this.options.imageSize[0]) || (context.size[1] < this.options.imageSize[1])) &&
