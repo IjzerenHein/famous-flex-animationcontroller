@@ -1,7 +1,7 @@
 famous-flex-animationcontroller
 ==========
 
-Animating from one famo.us view to another in awesome ways
+AnimationController demo for [famous-flex](https://github.com/IjzerenHein/famous-flex).
 
 ![Screenshot](screenshot.gif)
 
@@ -12,10 +12,6 @@ Animating from one famo.us view to another in awesome ways
 ## Tutorial
 
 -	[AnimationController Tutorial](./tutorial/AnimationController.md)
-
-
-## Examples
-
 
 
 ## Build
