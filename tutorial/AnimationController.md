@@ -174,7 +174,7 @@ animationController.show(myView, {
 
 # Getting the visible renderable
 
-To get the renderable that is currently visible or being shown, use:
+To get the renderable that is currently visible (or is currently being shown), use:
 
 ```javascript
 var renderable = animationController.get(); // get the visible renderable
@@ -189,7 +189,7 @@ AnimationController contains a cool feature which allows you to seemingly migrat
 When hiding an existing view and showing a new view, both views
 are scanned for any renderables that can be transferred from the old
 to the new view. When a match is found, the renderable from the old 
-view is "borrowed" from the view and the renderable on the new view is hidden (opacity = 0). The LayoutController then animates the "borrowed" renderable towards the position and size on the new view. Upon completion, the "borrowed" renderable is returned to the old view, and the renderable in the new view is made visible.
+view is "borrowed" from the view and the renderable on the new view is hidden (opacity = 0). The AnimationController then animates the "borrowed" renderable towards the position and size on the new view. Upon completion, the "borrowed" renderable is returned to the old view, and the renderable in the new view is made visible.
 
 ## How to support it
 
@@ -269,8 +269,8 @@ function _createLayout() {
 
 ## Configuring transferables
 
-To configure an AnimationController to transfer renderable, either use
-the constructor or set the transferables in the `show` function:
+To configure an AnimationController to transfer renderables, either use
+the constructor or `setOptions`:
 
 ```javascript
 var animationController = new AnimationController({
@@ -299,19 +299,20 @@ animationController.show(view, {
 ## The getTransferable function
 
 Whenever the AnimationController wants to transfer renderables, it
-calls `.getTransferable(id)` on the view. If the view supports the id, it should return a `Transferable` object which supports the following functions: `get`, `show` and `getSpec`:
+calls `.getTransferable(id)` on the view. If the view supports the id, it should return a `Transferable` object which supports the following functions: `get`, `show` and `getSpec`.
 
 ```javascript
 myView.prototype.getTransferable = function(id) {
     return {
         get: function() {
-            // return current renderable
+            // return current renderable that matches the given id
         },
         show: function(renderable) {
             // show given renderable
         }
         getSpec: function(callback, endState) {
-            // call callback and pass along the spec
+            // when the view knows the size, position, etc... of the requested id,
+            // it should call callback and pass along the render spec
         }
     };
 };
