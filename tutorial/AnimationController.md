@@ -279,7 +279,7 @@ var animationController = new AnimationController({
         items: {
             'image': 'image' // transfer renderable if both views contain 'image'
         }
-        zIndex: 100 // optiona, z-index the renderable is lifted while transferring
+        zIndex: 100 // optional, z-index the renderable is lifted while transferring
     }
 });
 ```
@@ -310,7 +310,7 @@ myView.prototype.getTransferable = function(id) {
         show: function(renderable) {
             // show given renderable
         }
-        getSpec: function(callback) {
+        getSpec: function(callback, endState) {
             // call callback and pass along the spec
         }
     };
