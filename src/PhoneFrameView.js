@@ -89,8 +89,9 @@ define(function(require, exports, module) {
             },*/
             layout: function(context, options) {
                 // full screen
-                if (isMobile.phone || (((context.size[0] < this.options.imageSize[0]) || (context.size[1] < this.options.imageSize[1])) &&
-                    !((context.size[0] < this.options.imageSize[1]) && (context.size[1] < this.options.imageSize[0])))) {
+                var canShowPortrait = (context.size[0] >= this.options.imageSize[0]) && (context.size[1] >= this.options.imageSize[1]);
+                var canShowLandscape = (context.size[0] >= this.options.imageSize[1]) && (context.size[1] >= this.options.imageSize[0]);
+                if (isMobile.phone || (!canShowPortrait && !canShowLandscape)) {
                     context.set('content', {
                         size: context.size,
                         translate: [0, 0, 1]
@@ -103,6 +104,7 @@ define(function(require, exports, module) {
                         size: context.size,
                         translate: [0, 0, 100]
                     });
+                    return;
                 }
                 // portrait
                 var imageSize;
