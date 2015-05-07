@@ -53,16 +53,37 @@ animationController.show(new Surface());
 
 # Animations
 
-Out of the box, AnimationController supports the following animation effects:
+Out of the box, AnimationController supports the following animation functions:
 
-|Animation|Value|Description|
+|Animation|Options & defaults|Description|
 |---------|-----|---|
-|`AnimationController.Animation.Slide.Left`|-|Shows or hides a view by sliding to the left.|
-|`AnimationController.Animation.Slide.Right`|-|Shows or hides a view by sliding to the right.|
-|`AnimationController.Animation.Slide.Up`|-|Shows or hides a view by sliding upwards.|
-|`AnimationController.Animation.Slide.Down`|-|Shows or hides a view by sliding downwards.|
-|`AnimationController.Animation.Fade`|`[opacity]`|Shows or hides a view by fading it.|
-|`AnimationController.Animation.Zoom`|`[x-scale, y-scale]`|Shows or hides a view by zooming it.|
+|`Slide.Left`|-|Shows or hides a view by sliding to the left.|
+|`Slide.Right`|-|Shows or hides a view by sliding to the right.|
+|`Slide.Up`|-|Shows or hides a view by sliding upwards.|
+|`Slide.Down`|-|Shows or hides a view by sliding downwards.|
+|`Fade`|`{opacity: 0}`|Shows or hides a view by fading it.|
+|`Zoom`|`{scale: 0.5}`|Shows or hides a view by zooming it.|
+|`FadedZoom`|`{opacity: 0, showScale: 0.9, hideScale: 1.1}`|A fancy fade function with a subtle zoom effect.|
+
+To use an animation function, just assign it to the `animation` option:
+
+```javascript
+var animationController = new AnimationController({
+    animation: AnimationController.Animation.Slide.Left,
+});
+```
+
+You can override any default options using the following construct:
+
+```javascript
+var animationController = new AnimationController({
+    animation: AnimationController.Animation.FadedZoom.bind({
+        opacity: 0.4,
+        showScale: 0.8,
+        hideScale: 2
+    })
+});
+```
 
 
 ## Configuring animations
@@ -204,8 +225,8 @@ The easiest way to support it, is to create your views using a LayoutController,
 function ProfileView(options) {
     View.apply(this, arguments);
 
-    _createRenderables.call(this);
     _createLayout.call(this);
+    _createRenderables.call(this);
 }
 ProfileView.prototype = Object.create(View.prototype);
 ProfileView.prototype.constructor = ProfileView;
@@ -217,27 +238,6 @@ ProfileView.DEFAULT_OPTIONS = {
     nameHeight: 60,
     profileText: 'Scarlett Johansson was born in New York City. Her mother, Melanie Sloan, is from an Ashkenazi Jewish family, and her father, Karsten Johansson, is Danish. Scarlett showed a passion for acting at a young age and starred in many plays.<br><br>She has a sister named Vanessa Johansson, a brother named Adrian, and a twin brother named Hunter Johansson born three minutes after her. She began her acting career starring as Laura Nelson in the comedy film North (1994).<br><br>The acclaimed drama film The Horse Whisperer (1998) brought Johansson critical praise and worldwide recognition. Following the film\'s success, she starred in many other films including the critically acclaimed cult film Ghost World (2001) and then the hit Lost in Translation (2003) with Bill Murray in which she again stunned critics. Later on, she appeared in the drama film Girl with a Pearl Earring (2003).'
 };
-
-function _createRenderables() {
-    this._renderables = {
-        background: new Surface({
-            classes: this.options.classes.concat(['background'])
-        }),
-        image: new BkImageSurface({
-            classes: this.options.classes.concat(['image']),
-            content: 'http://scarlet.com/image.jpg',
-            sizeMode: 'cover'
-        }),
-        name: new Surface({
-            classes: this.options.classes.concat(['name']),
-            content: '<div>Scarlett Johansson</div>'
-        }),
-        text: new Surface({
-            classes: this.options.classes.concat(['text']),
-            content: this.options.profileText
-        })
-    };
-}
 
 function _createLayout() {
     this.layout = new LayoutController({
@@ -259,11 +259,32 @@ function _createLayout() {
                 size: [context.size[0], context.size[1] - name.size[1] - name.translate[1]],
                 translate: [0, name.translate[1] + name.size[1], 1]
             });
-        }.bind(this),
-        dataSource: this._renderables
+        }.bind(this)
     });
     this.add(this.layout);
     this.layout.pipe(this._eventOutput);
+}
+
+function _createRenderables() {
+    this._renderables = {
+        background: new Surface({
+            classes: this.options.classes.concat(['background'])
+        }),
+        image: new BkImageSurface({
+            classes: this.options.classes.concat(['image']),
+            content: 'http://scarlet.com/image.jpg',
+            sizeMode: 'cover'
+        }),
+        name: new Surface({
+            classes: this.options.classes.concat(['name']),
+            content: '<div>Scarlett Johansson</div>'
+        }),
+        text: new Surface({
+            classes: this.options.classes.concat(['text']),
+            content: this.options.profileText
+        })
+    };
+    this.layout.setDataSource(this._renderables);
 }
 ```
 
@@ -279,7 +300,8 @@ var animationController = new AnimationController({
         items: {
             'image': 'image' // transfer renderable if both views contain 'image'
         }
-        zIndex: 100 // optional, z-index the renderable is lifted while transferring
+        zIndex: 100 // optional, z-index the renderable is lifted while transferring,
+        fastResize: true // optional, when enabled using scaling i.s.o. resizing while transferring the renderable (default: true)
     }
 });
 ```
