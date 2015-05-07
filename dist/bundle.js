@@ -61,18 +61,18 @@
 	
 	    //<webpack>
 	    __webpack_require__(/*! famous-polyfills */ 5);
-	    __webpack_require__(/*! famous/core/famous.css */ 9);
-	    __webpack_require__(/*! ./styles.css */ 6);
-	    __webpack_require__(/*! ./index.html */ 8);
+	    __webpack_require__(/*! famous/core/famous.css */ 11);
+	    __webpack_require__(/*! ./styles.css */ 9);
+	    __webpack_require__(/*! ./index.html */ 6);
 	    //</webpack>
 	
 	    // import dependencies
-	    var Engine = __webpack_require__(/*! famous/core/Engine */ 11);
+	    var Engine = __webpack_require__(/*! famous/core/Engine */ 7);
 	    var AnimationController = __webpack_require__(/*! famous-flex/AnimationController */ 13);
 	    var ProfileView = __webpack_require__(/*! ./views/ProfileView */ 1);
 	    var FullImageView = __webpack_require__(/*! ./views/FullImageView */ 2);
 	    var NavBarView = __webpack_require__(/*! ./views/NavBarView */ 3);
-	    var Easing = __webpack_require__(/*! famous/transitions/Easing */ 12);
+	    var Easing = __webpack_require__(/*! famous/transitions/Easing */ 8);
 	    var PhoneFrameView = __webpack_require__(/*! ./PhoneFrameView */ 4);
 	    var FastClick = __webpack_require__(/*! fastclick/lib/fastclick */ 14);
 	    FastClick.attach(document.body);
@@ -201,7 +201,7 @@
 	            }),
 	            image: new BkImageSurface({
 	                classes: this.options.classes.concat(['image']),
-	                content: __webpack_require__(/*! ../images/scarlett.jpg */ 24),
+	                content: __webpack_require__(/*! ../images/scarlett.jpg */ 26),
 	                sizeMode: 'cover'
 	            }),
 	            name: new Surface({
@@ -299,7 +299,7 @@
 	            }),
 	            image: new BkImageSurface({
 	                classes: this.options.classes.concat(['image']),
-	                content: __webpack_require__(/*! ../images/scarlett.jpg */ 24),
+	                content: __webpack_require__(/*! ../images/scarlett.jpg */ 26),
 	                sizeMode: 'cover'
 	            }),
 	            text: new Surface({
@@ -423,7 +423,7 @@
 	            }),
 	            navBarImage: new BkImageSurface({
 	                classes: this.options.classes.concat(['navbar', 'image']),
-	                content: __webpack_require__(/*! ../images/scarlett.jpg */ 24),
+	                content: __webpack_require__(/*! ../images/scarlett.jpg */ 26),
 	                sizeMode: 'cover'
 	            }),
 	            content: new Surface({
@@ -490,7 +490,7 @@
 	    var Surface = __webpack_require__(/*! famous/core/Surface */ 16);
 	    var LayoutController = __webpack_require__(/*! famous-flex/LayoutController */ 17);
 	    var BkImageSurface = __webpack_require__(/*! famous-bkimagesurface/BkImageSurface */ 23);
-	    var isMobile = __webpack_require__(/*! ismobilejs */ 26);
+	    var isMobile = __webpack_require__(/*! ismobilejs */ 24);
 	
 	    /**
 	     * @class
@@ -667,33 +667,6 @@
 /***/ },
 /* 6 */
 /*!********************!*\
-  !*** ./styles.css ***!
-  \********************/
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-	var dispose = __webpack_require__(/*! ../~/style-loader/addStyle.js */ 19)
-		// The css code:
-		(__webpack_require__(/*! !../~/css-loader!./styles.css */ 7));
-	// Hot Module Replacement
-	if(false) {
-		module.hot.accept();
-		module.hot.dispose(dispose);
-	}
-
-/***/ },
-/* 7 */
-/*!************************************!*\
-  !*** ../~/css-loader!./styles.css ***!
-  \************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports =
-		"body, div {\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n\n  /* prevent text selection */\n  -moz-user-select: -moz-none;\n \t-khtml-user-select: none;\n \t-webkit-user-select: none;\n \t-ms-user-select: none;\n \tuser-select: none;\n}\nbody {\n  background-color: #333333;\n}\n\n.frame.background {\n  -background-color: #333333;\n  background-color: white;\n}\n.frame.background.inner {\n  background-color: #FAFAFA;\n}\n\n.view.background {\n  background-color: #FAFAFA;\n}\n.view.image {\n  border-radius: 50%;\n}\n.view.text {\n  text-align: center;\n  font-size: 16px;\n}\n\n.view.navbar.title > div, .view.profile.name > div {\n  text-align: center;\n  font-size: 18px;\n  color: #444444;\n  /* align vertical */\n  display: block;\n  position: relative;\n  top: 50%;\n  -webkit-transform: translateY(-50%);\n  -moz-transform: translateY(-50%);\n  -ms-transform: translateY(-50%);\n  -o-transform: translateY(-50%);\n  transform: translateY(-50%);\n}\n.view.profile.text {\n  padding: 0 25px;\n  font-size: 16px;\n  color: #888888;\n}\n.view.navbar.title > div {\n  color: #666666;\n}\n.view.navbar.background {\n  background-color: #EEEEEE;\n  border-bottom: 1px solid #DDDDDD;\n}\n";
-
-/***/ },
-/* 8 */
-/*!********************!*\
   !*** ./index.html ***!
   \********************/
 /***/ function(module, exports, __webpack_require__) {
@@ -701,34 +674,7 @@
 	module.exports = __webpack_require__.p + "index.html"
 
 /***/ },
-/* 9 */
-/*!***********************************!*\
-  !*** ../~/famous/core/famous.css ***!
-  \***********************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-	var dispose = __webpack_require__(/*! ../~/style-loader/addStyle.js */ 19)
-		// The css code:
-		(__webpack_require__(/*! !../~/css-loader!../~/famous/core/famous.css */ 10));
-	// Hot Module Replacement
-	if(false) {
-		module.hot.accept();
-		module.hot.dispose(dispose);
-	}
-
-/***/ },
-/* 10 */
-/*!***************************************************!*\
-  !*** ../~/css-loader!../~/famous/core/famous.css ***!
-  \***************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports =
-		"/* This Source Code Form is subject to the terms of the Mozilla Public\n * License, v. 2.0. If a copy of the MPL was not distributed with this\n * file, You can obtain one at http://mozilla.org/MPL/2.0/.\n *\n * Owner: mark@famo.us\n * @license MPL 2.0\n * @copyright Famous Industries, Inc. 2015\n */\n\n.famous-root {\n    width: 100%;\n    height: 100%;\n    margin: 0px;\n    padding: 0px;\n    opacity: .999999; /* ios8 hotfix */\n    overflow: hidden;\n    -webkit-transform-style: preserve-3d;\n    transform-style: preserve-3d;\n}\n\n.famous-container, .famous-group {\n    position: absolute;\n    top: 0px;\n    left: 0px;\n    bottom: 0px;\n    right: 0px;\n    overflow: visible;\n    -webkit-transform-style: preserve-3d;\n    transform-style: preserve-3d;\n    -webkit-backface-visibility: visible;\n    backface-visibility: visible;\n    pointer-events: none;\n}\n\n.famous-group {\n    width: 0px;\n    height: 0px;\n    margin: 0px;\n    padding: 0px;\n}\n\n.famous-surface {\n    position: absolute;\n    -webkit-transform-origin: center center;\n    transform-origin: center center;\n    -webkit-backface-visibility: hidden;\n    backface-visibility: hidden;\n    -webkit-transform-style: preserve-3d;\n    transform-style: preserve-3d;\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n    -webkit-tap-highlight-color: transparent;\n    pointer-events: auto;\n}\n\n.famous-container-group {\n    position: relative;\n    width: 100%;\n    height: 100%;\n}\n";
-
-/***/ },
-/* 11 */
+/* 7 */
 /*!**********************************!*\
   !*** ../~/famous/core/Engine.js ***!
   \**********************************/
@@ -914,7 +860,7 @@
 	module.exports = Engine;
 
 /***/ },
-/* 12 */
+/* 8 */
 /*!*****************************************!*\
   !*** ../~/famous/transitions/Easing.js ***!
   \*****************************************/
@@ -1088,6 +1034,60 @@
 	module.exports = Easing;
 
 /***/ },
+/* 9 */
+/*!********************!*\
+  !*** ./styles.css ***!
+  \********************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	var dispose = __webpack_require__(/*! ../~/style-loader/addStyle.js */ 19)
+		// The css code:
+		(__webpack_require__(/*! !../~/css-loader!./styles.css */ 10));
+	// Hot Module Replacement
+	if(false) {
+		module.hot.accept();
+		module.hot.dispose(dispose);
+	}
+
+/***/ },
+/* 10 */
+/*!************************************!*\
+  !*** ../~/css-loader!./styles.css ***!
+  \************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports =
+		"body, div {\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n\n  /* prevent text selection */\n  -moz-user-select: -moz-none;\n \t-khtml-user-select: none;\n \t-webkit-user-select: none;\n \t-ms-user-select: none;\n \tuser-select: none;\n}\nbody {\n  background-color: #333333;\n}\n\n.frame.background {\n  -background-color: #333333;\n  background-color: white;\n}\n.frame.background.inner {\n  background-color: #FAFAFA;\n}\n\n.view.background {\n  background-color: #FAFAFA;\n}\n.view.image {\n  border-radius: 50%;\n}\n.view.text {\n  text-align: center;\n  font-size: 16px;\n}\n\n.view.navbar.title > div, .view.profile.name > div {\n  text-align: center;\n  font-size: 18px;\n  color: #444444;\n  /* align vertical */\n  display: block;\n  position: relative;\n  top: 50%;\n  -webkit-transform: translateY(-50%);\n  -moz-transform: translateY(-50%);\n  -ms-transform: translateY(-50%);\n  -o-transform: translateY(-50%);\n  transform: translateY(-50%);\n}\n.view.profile.text {\n  padding: 0 25px;\n  font-size: 16px;\n  color: #888888;\n}\n.view.navbar.title > div {\n  color: #666666;\n}\n.view.navbar.background {\n  background-color: #EEEEEE;\n  border-bottom: 1px solid #DDDDDD;\n}\n";
+
+/***/ },
+/* 11 */
+/*!***********************************!*\
+  !*** ../~/famous/core/famous.css ***!
+  \***********************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	var dispose = __webpack_require__(/*! ../~/style-loader/addStyle.js */ 19)
+		// The css code:
+		(__webpack_require__(/*! !../~/css-loader!../~/famous/core/famous.css */ 12));
+	// Hot Module Replacement
+	if(false) {
+		module.hot.accept();
+		module.hot.dispose(dispose);
+	}
+
+/***/ },
+/* 12 */
+/*!***************************************************!*\
+  !*** ../~/css-loader!../~/famous/core/famous.css ***!
+  \***************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports =
+		"/* This Source Code Form is subject to the terms of the Mozilla Public\n * License, v. 2.0. If a copy of the MPL was not distributed with this\n * file, You can obtain one at http://mozilla.org/MPL/2.0/.\n *\n * Owner: mark@famo.us\n * @license MPL 2.0\n * @copyright Famous Industries, Inc. 2015\n */\n\n.famous-root {\n    width: 100%;\n    height: 100%;\n    margin: 0px;\n    padding: 0px;\n    opacity: .999999; /* ios8 hotfix */\n    overflow: hidden;\n    -webkit-transform-style: preserve-3d;\n    transform-style: preserve-3d;\n}\n\n.famous-container, .famous-group {\n    position: absolute;\n    top: 0px;\n    left: 0px;\n    bottom: 0px;\n    right: 0px;\n    overflow: visible;\n    -webkit-transform-style: preserve-3d;\n    transform-style: preserve-3d;\n    -webkit-backface-visibility: visible;\n    backface-visibility: visible;\n    pointer-events: none;\n}\n\n.famous-group {\n    width: 0px;\n    height: 0px;\n    margin: 0px;\n    padding: 0px;\n}\n\n.famous-surface {\n    position: absolute;\n    -webkit-transform-origin: center center;\n    transform-origin: center center;\n    -webkit-backface-visibility: hidden;\n    backface-visibility: hidden;\n    -webkit-transform-style: preserve-3d;\n    transform-style: preserve-3d;\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n    -webkit-tap-highlight-color: transparent;\n    pointer-events: auto;\n}\n\n.famous-container-group {\n    position: relative;\n    width: 100%;\n    height: 100%;\n}\n";
+
+/***/ },
 /* 13 */
 /*!***************************************************!*\
   !*** ../~/famous-flex/src/AnimationController.js ***!
@@ -1114,12 +1114,12 @@
 	    // import dependencies
 	    var View = __webpack_require__(/*! famous/core/View */ 15);
 	    var LayoutController = __webpack_require__(/*! ./LayoutController */ 17);
-	    var Transform = __webpack_require__(/*! famous/core/Transform */ 30);
-	    var Modifier = __webpack_require__(/*! famous/core/Modifier */ 31);
-	    var StateModifier = __webpack_require__(/*! famous/modifiers/StateModifier */ 32);
-	    var RenderNode = __webpack_require__(/*! famous/core/RenderNode */ 33);
-	    var Timer = __webpack_require__(/*! famous/utilities/Timer */ 34);
-	    var Easing = __webpack_require__(/*! famous/transitions/Easing */ 12);
+	    var Transform = __webpack_require__(/*! famous/core/Transform */ 32);
+	    var Modifier = __webpack_require__(/*! famous/core/Modifier */ 33);
+	    var StateModifier = __webpack_require__(/*! famous/modifiers/StateModifier */ 34);
+	    var RenderNode = __webpack_require__(/*! famous/core/RenderNode */ 30);
+	    var Timer = __webpack_require__(/*! famous/utilities/Timer */ 35);
+	    var Easing = __webpack_require__(/*! famous/transitions/Easing */ 8);
 	
 	    /**
 	     * @class
@@ -1136,6 +1136,7 @@
 	     * @param {Object} [options.transfer] Transfer options.
 	     * @param {Object} [options.transfer.transition] Transfer specific transition options.
 	     * @param {Number} [options.transfer.zIndex] Z-index the tranferables are moved on top while animating (default: 10).
+	     * @param {Bool} [options.transfer.fastResize] When enabled, scales the renderable i.s.o. resizing when doing the transfer animation (default: true).
 	     * @param {Array} [options.transfer.items] Ids (key/value) pairs (source-id/target-id) of the renderables that should be transferred.
 	     * @alias module:AnimationController
 	     */
@@ -1169,16 +1170,29 @@
 	                return {transform: Transform.translate(0, show ? -size[1] : size[1], 0)};
 	            }
 	        },
-	        Fade: function(show, size, opacity) {
-	            return {opacity: (opacity === undefined) ? 0 : opacity};
-	        },
-	        Zoom: function(show, size, scale) {
+	        Fade: function(show, size) {
 	            return {
-	              transform: Transform.scale(scale ? scale[0] : 0.5, scale ? scale[1] : 0.5, 1),
-	              align: [0.5, 0.5],
-	              origin: [0.5, 0.5]
+	                opacity: (this && (this.opacity !== undefined)) ? this.opacity : 0
 	            };
-	        }/*,
+	        },
+	        Zoom: function(show, size) {
+	            var scale = (this && (this.scale !== undefined)) ? this.scale : 0.5;
+	            return {
+	                transform: Transform.scale(scale, scale, 1),
+	                align: [0.5, 0.5],
+	                origin: [0.5, 0.5]
+	            };
+	        },
+	        FadedZoom: function(show, size) {
+	            var scale = show ? ((this && (this.showScale !== undefined)) ? this.showScale : 0.9) : ((this && (this.hideScale !== undefined)) ? this.hideScale : 1.1);
+	            return {
+	                opacity: (this && (this.opacity !== undefined)) ? this.opacity : 0,
+	                transform: Transform.scale(scale, scale, 1),
+	                align: [0.5, 0.5],
+	                origin: [0.5, 0.5]
+	            };
+	        }
+	        /*,
 	        Flip: {
 	            Left: function(show, size) {
 	                return {transform: Transform.rotate(0, show ? Math.PI : -Math.PI, 0)};
@@ -1207,6 +1221,7 @@
 	            // animation
 	        },
 	        transfer: {
+	            fastResize: true,
 	            zIndex: 10 // z-index offset the items are translated while transferring
 	            // transition,
 	            // items: {
@@ -1387,14 +1402,25 @@
 	                Timer.after(function() {
 	                    transferable.target.getSpec(function(targetSpec, transition) {
 	                        mod.halt();
-	                        if (sourceSpec.transform || targetSpec.transform) {
-	                            mod.setTransform(targetSpec.transform || Transform.identity, transition || item.options.transfer.transition);
-	                        }
 	                        if ((sourceSpec.opacity !== undefined) || (targetSpec.opacity !== undefined)) {
 	                            mod.setOpacity((targetSpec.opacity === undefined) ? 1 : targetSpec.opacity, transition|| item.options.transfer.transition);
 	                        }
-	                        if (sourceSpec.size || targetSpec.size) {
-	                            mod.setSize(targetSpec.size || sourceSpec.size, transition || item.options.transfer.transition);
+	                        if (item.options.transfer.fastResize) {
+	                            if (sourceSpec.transform || targetSpec.transform || sourceSpec.size || targetSpec.size) {
+	                                var transform = targetSpec.transform || Transform.identity;
+	                                if (sourceSpec.size && targetSpec.size) {
+	                                    transform = Transform.multiply(transform, Transform.scale(targetSpec.size[0] / sourceSpec.size[0], targetSpec.size[1] / sourceSpec.size[1], 1));
+	                                }
+	                                mod.setTransform(transform, transition || item.options.transfer.transition);
+	                            }
+	                        }
+	                        else {
+	                            if (sourceSpec.transform || targetSpec.transform) {
+	                                mod.setTransform(targetSpec.transform || Transform.identity, transition || item.options.transfer.transition);
+	                            }
+	                            if (sourceSpec.size || targetSpec.size) {
+	                                mod.setSize(targetSpec.size || sourceSpec.size, transition || item.options.transfer.transition);
+	                            }
 	                        }
 	                    }, true);
 	                }, 1);
@@ -1451,7 +1477,7 @@
 	     */
 	    function _startAnimation(item, prevItem, size, show) {
 	        var animation = show ? item.options.show.animation : item.options.hide.animation;
-	        var spec = animation ? animation(show, size) : {};
+	        var spec = animation ? animation.call(undefined, show, size) : {};
 	        item.mod.halt();
 	        var callback;
 	        if (show) {
@@ -1496,41 +1522,38 @@
 	    }
 	
 	    /**
-	     * Creates a view-item.
+	     * Sets the options for an item.
 	     */
-	    function _createItem(view, options, callback) {
-	        var item = {
-	            view: view,
-	            mod: new StateModifier(),
-	            state: ItemState.QUEUED,
-	            options: {
-	                show: {
-	                    transition: this.options.show.transition || this.options.transition,
-	                    animation: this.options.show.animation || this.options.animation
-	                },
-	                hide: {
-	                    transition: this.options.hide.transition || this.options.transition,
-	                    animation: this.options.hide.animation || this.options.animation
-	                },
-	                transfer: {
-	                    transition: this.options.transfer.transition || this.options.transition,
-	                    items: this.options.transfer.items || {},
-	                    zIndex: this.options.transfer.zIndex
-	                }
+	    function _setItemOptions(item, options) {
+	        item.options = {
+	            show: {
+	                transition: this.options.show.transition || this.options.transition,
+	                animation: this.options.show.animation || this.options.animation
 	            },
-	            callback: callback,
-	            transferables: [] // renderables currently being transfered
+	            hide: {
+	                transition: this.options.hide.transition || this.options.transition,
+	                animation: this.options.hide.animation || this.options.animation
+	            },
+	            transfer: {
+	                transition: this.options.transfer.transition || this.options.transition,
+	                items: this.options.transfer.items || {},
+	                zIndex: this.options.transfer.zIndex,
+	                fastResize: this.options.transfer.fastResize
+	            }
 	        };
 	        if (options) {
 	            item.options.show.transition = (options.show ? options.show.transition : undefined) || options.transition || item.options.show.transition;
-	            item.options.show.animation = (options.show ? options.show.animation : undefined) || options.animation || item.options.show.animation;
+	            if (options && options.show && (options.show.animation !== undefined)) {
+	                item.options.show.animation = options.show.animation;
+	            }
+	            else if (options && (options.animation !== undefined)) {
+	                item.options.show.animation = options.animation;
+	            }
 	            item.options.transfer.transition = (options.transfer ? options.transfer.transition : undefined) || options.transition || item.options.transfer.transition;
 	            item.options.transfer.items = (options.transfer ? options.transfer.items : undefined) || item.options.transfer.items;
 	            item.options.transfer.zIndex = (options.transfer && (options.transfer.zIndex !== undefined)) ? options.transfer.zIndex : item.options.transfer.zIndex;
+	            item.options.transfer.fastResize = (options.transfer && (options.transfer.fastResize !== undefined)) ? options.transfer.fastResize : item.options.transfer.fastResize;
 	        }
-	        item.node = new RenderNode(item.mod);
-	        item.node.add(view);
-	        return item;
 	    }
 	
 	    /**
@@ -1598,13 +1621,33 @@
 	        var item = this._viewStack.length ? this._viewStack[this._viewStack.length - 1] : undefined;
 	        if (item && (item.view === renderable)) {
 	            item.hide = false;
+	            if (item.state === ItemState.HIDE) {
+	                item.state = ItemState.QUEUED;
+	                _setItemOptions.call(this, item, options);
+	                _updateState.call(this);
+	            }
 	            return this;
 	        }
 	        if (item && (item.state !== ItemState.HIDING) && options) {
 	            item.options.hide.transition = (options.hide ? options.hide.transition : undefined) || options.transition || item.options.hide.transition;
-	            item.options.hide.animation = (options.hide ? options.hide.animation : undefined) || options.animation || item.options.hide.animation;
+	            if (options && options.hide && (options.hide.animation !== undefined)) {
+	                item.options.hide.animation = options.hide.animation;
+	            }
+	            else if (options && (options.animation !== undefined)) {
+	                item.options.hide.animation = options.animation;
+	            }
 	        }
-	        item = _createItem.call(this, renderable, options, callback);
+	
+	        item = {
+	            view: renderable,
+	            mod: new StateModifier(),
+	            state: ItemState.QUEUED,
+	            callback: callback,
+	            transferables: [] // renderables currently being transfered
+	        };
+	        item.node = new RenderNode(item.mod);
+	        item.node.add(renderable);
+	        _setItemOptions.call(this, item, options);
 	        item.showCallback = function() {
 	            item.state = ItemState.VISIBLE;
 	            _updateState.call(this);
@@ -1619,6 +1662,7 @@
 	            this._viewStack.splice(index, 1);
 	            item.view = undefined;
 	            _updateState.call(this);
+	            this.layout.reflowLayout();
 	        }.bind(this);
 	        this._renderables.views.push(item.node);
 	        this._viewStack.push(item);
@@ -1643,7 +1687,12 @@
 	        item.hide = true;
 	        if (options) {
 	            item.options.hide.transition = (options.hide ? options.hide.transition : undefined) || options.transition || item.options.hide.transition;
-	            item.options.hide.animation = (options.hide ? options.hide.animation : undefined) || options.animation || item.options.hide.animation;
+	            if (options && options.hide && (options.hide.animation !== undefined)) {
+	                item.options.hide.animation = options.hide.animation;
+	            }
+	            else if (options && (options.animation !== undefined)) {
+	                item.options.hide.animation = options.animation;
+	            }
 	        }
 	        item.hideCallback = function() {
 	            var index = this._viewStack.indexOf(item);
@@ -1651,6 +1700,7 @@
 	            this._viewStack.splice(index, 1);
 	            item.view = undefined;
 	            _updateState.call(this);
+	            this.layout.reflowLayout();
 	            if (callback) {
 	                callback();
 	            }
@@ -2566,8 +2616,8 @@
 	 */
 	var EventHandler = __webpack_require__(/*! ./EventHandler */ 28);
 	var OptionsManager = __webpack_require__(/*! ./OptionsManager */ 29);
-	var RenderNode = __webpack_require__(/*! ./RenderNode */ 33);
-	var Utility = __webpack_require__(/*! ../utilities/Utility */ 35);
+	var RenderNode = __webpack_require__(/*! ./RenderNode */ 30);
+	var Utility = __webpack_require__(/*! ../utilities/Utility */ 31);
 	function View(options) {
 	    this._node = new RenderNode();
 	    this._eventInput = new EventHandler();
@@ -2955,7 +3005,7 @@
 	!(__WEBPACK_AMD_DEFINE_RESULT__ = function(require, exports, module) {
 	
 	    // import dependencies
-	    var Utility = __webpack_require__(/*! famous/utilities/Utility */ 35);
+	    var Utility = __webpack_require__(/*! famous/utilities/Utility */ 31);
 	    var Entity = __webpack_require__(/*! famous/core/Entity */ 37);
 	    var ViewSequence = __webpack_require__(/*! famous/core/ViewSequence */ 38);
 	    var OptionsManager = __webpack_require__(/*! famous/core/OptionsManager */ 29);
@@ -2964,7 +3014,7 @@
 	    var LayoutNodeManager = __webpack_require__(/*! ./LayoutNodeManager */ 40);
 	    var LayoutNode = __webpack_require__(/*! ./LayoutNode */ 41);
 	    var FlowLayoutNode = __webpack_require__(/*! ./FlowLayoutNode */ 42);
-	    var Transform = __webpack_require__(/*! famous/core/Transform */ 30);
+	    var Transform = __webpack_require__(/*! famous/core/Transform */ 32);
 	    __webpack_require__(/*! ./helpers/LayoutDockHelper */ 18);
 	
 	    /**
@@ -4769,24 +4819,6 @@
 
 /***/ },
 /* 24 */
-/*!*****************************!*\
-  !*** ./images/scarlett.jpg ***!
-  \*****************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__.p + "images/scarlett.jpg"
-
-/***/ },
-/* 25 */
-/*!***************************!*\
-  !*** ./images/iphone.png ***!
-  \***************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__.p + "images/iphone.png"
-
-/***/ },
-/* 26 */
 /*!***********************************!*\
   !*** ../~/ismobilejs/isMobile.js ***!
   \***********************************/
@@ -4906,6 +4938,24 @@
 
 
 /***/ },
+/* 25 */
+/*!***************************!*\
+  !*** ./images/iphone.png ***!
+  \***************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "images/iphone.png"
+
+/***/ },
+/* 26 */
+/*!*****************************!*\
+  !*** ./images/scarlett.jpg ***!
+  \*****************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "images/scarlett.jpg"
+
+/***/ },
 /* 27 */
 /*!***********************************!*\
   !*** ../~/famous/core/Context.js ***!
@@ -4919,10 +4969,10 @@
 	 * @license MPL 2.0
 	 * @copyright Famous Industries, Inc. 2015
 	 */
-	var RenderNode = __webpack_require__(/*! ./RenderNode */ 33);
+	var RenderNode = __webpack_require__(/*! ./RenderNode */ 30);
 	var EventHandler = __webpack_require__(/*! ./EventHandler */ 28);
 	var ElementAllocator = __webpack_require__(/*! ./ElementAllocator */ 43);
-	var Transform = __webpack_require__(/*! ./Transform */ 30);
+	var Transform = __webpack_require__(/*! ./Transform */ 32);
 	var Transitionable = __webpack_require__(/*! ../transitions/Transitionable */ 44);
 	var _zeroZero = [
 	    0,
@@ -5231,6 +5281,190 @@
 
 /***/ },
 /* 30 */
+/*!**************************************!*\
+  !*** ../~/famous/core/RenderNode.js ***!
+  \**************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	/* This Source Code Form is subject to the terms of the Mozilla Public
+	 * License, v. 2.0. If a copy of the MPL was not distributed with this
+	 * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+	 *
+	 * @license MPL 2.0
+	 * @copyright Famous Industries, Inc. 2015
+	 */
+	var Entity = __webpack_require__(/*! ./Entity */ 37);
+	var SpecParser = __webpack_require__(/*! ./SpecParser */ 46);
+	function RenderNode(object) {
+	    this._object = null;
+	    this._child = null;
+	    this._hasMultipleChildren = false;
+	    this._isRenderable = false;
+	    this._isModifier = false;
+	    this._resultCache = {};
+	    this._prevResults = {};
+	    this._childResult = null;
+	    if (object)
+	        this.set(object);
+	}
+	RenderNode.prototype.add = function add(child) {
+	    var childNode = child instanceof RenderNode ? child : new RenderNode(child);
+	    if (this._child instanceof Array)
+	        this._child.push(childNode);
+	    else if (this._child) {
+	        this._child = [
+	            this._child,
+	            childNode
+	        ];
+	        this._hasMultipleChildren = true;
+	        this._childResult = [];
+	    } else
+	        this._child = childNode;
+	    return childNode;
+	};
+	RenderNode.prototype.get = function get() {
+	    return this._object || (this._hasMultipleChildren ? null : this._child ? this._child.get() : null);
+	};
+	RenderNode.prototype.set = function set(child) {
+	    this._childResult = null;
+	    this._hasMultipleChildren = false;
+	    this._isRenderable = child.render ? true : false;
+	    this._isModifier = child.modify ? true : false;
+	    this._object = child;
+	    this._child = null;
+	    if (child instanceof RenderNode)
+	        return child;
+	    else
+	        return this;
+	};
+	RenderNode.prototype.getSize = function getSize() {
+	    var result = null;
+	    var target = this.get();
+	    if (target && target.getSize)
+	        result = target.getSize();
+	    if (!result && this._child && this._child.getSize)
+	        result = this._child.getSize();
+	    return result;
+	};
+	function _applyCommit(spec, context, cacheStorage) {
+	    var result = SpecParser.parse(spec, context);
+	    var keys = Object.keys(result);
+	    for (var i = 0; i < keys.length; i++) {
+	        var id = keys[i];
+	        var childNode = Entity.get(id);
+	        var commitParams = result[id];
+	        commitParams.allocator = context.allocator;
+	        var commitResult = childNode.commit(commitParams);
+	        if (commitResult)
+	            _applyCommit(commitResult, context, cacheStorage);
+	        else
+	            cacheStorage[id] = commitParams;
+	    }
+	}
+	RenderNode.prototype.commit = function commit(context) {
+	    var prevKeys = Object.keys(this._prevResults);
+	    for (var i = 0; i < prevKeys.length; i++) {
+	        var id = prevKeys[i];
+	        if (this._resultCache[id] === undefined) {
+	            var object = Entity.get(id);
+	            if (object.cleanup)
+	                object.cleanup(context.allocator);
+	        }
+	    }
+	    this._prevResults = this._resultCache;
+	    this._resultCache = {};
+	    _applyCommit(this.render(), context, this._resultCache);
+	};
+	RenderNode.prototype.render = function render() {
+	    if (this._isRenderable)
+	        return this._object.render();
+	    var result = null;
+	    if (this._hasMultipleChildren) {
+	        result = this._childResult;
+	        var children = this._child;
+	        for (var i = 0; i < children.length; i++) {
+	            result[i] = children[i].render();
+	        }
+	    } else if (this._child)
+	        result = this._child.render();
+	    return this._isModifier ? this._object.modify(result) : result;
+	};
+	module.exports = RenderNode;
+
+/***/ },
+/* 31 */
+/*!****************************************!*\
+  !*** ../~/famous/utilities/Utility.js ***!
+  \****************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	/* This Source Code Form is subject to the terms of the Mozilla Public
+	 * License, v. 2.0. If a copy of the MPL was not distributed with this
+	 * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+	 *
+	 * @license MPL 2.0
+	 * @copyright Famous Industries, Inc. 2015
+	 */
+	var Utility = {};
+	Utility.Direction = {
+	    X: 0,
+	    Y: 1,
+	    Z: 2
+	};
+	Utility.after = function after(count, callback) {
+	    var counter = count;
+	    return function () {
+	        counter--;
+	        if (counter === 0)
+	            callback.apply(this, arguments);
+	    };
+	};
+	Utility.loadURL = function loadURL(url, callback) {
+	    var xhr = new XMLHttpRequest();
+	    xhr.onreadystatechange = function onreadystatechange() {
+	        if (this.readyState === 4) {
+	            if (callback)
+	                callback(this.responseText);
+	        }
+	    };
+	    xhr.open('GET', url);
+	    xhr.send();
+	};
+	Utility.createDocumentFragmentFromHTML = function createDocumentFragmentFromHTML(html) {
+	    var element = document.createElement('div');
+	    element.innerHTML = html;
+	    var result = document.createDocumentFragment();
+	    while (element.hasChildNodes())
+	        result.appendChild(element.firstChild);
+	    return result;
+	};
+	Utility.clone = function clone(b) {
+	    var a;
+	    if (typeof b === 'object') {
+	        a = b instanceof Array ? [] : {};
+	        for (var key in b) {
+	            if (typeof b[key] === 'object' && b[key] !== null) {
+	                if (b[key] instanceof Array) {
+	                    a[key] = new Array(b[key].length);
+	                    for (var i = 0; i < b[key].length; i++) {
+	                        a[key][i] = Utility.clone(b[key][i]);
+	                    }
+	                } else {
+	                    a[key] = Utility.clone(b[key]);
+	                }
+	            } else {
+	                a[key] = b[key];
+	            }
+	        }
+	    } else {
+	        a = b;
+	    }
+	    return a;
+	};
+	module.exports = Utility;
+
+/***/ },
+/* 32 */
 /*!*************************************!*\
   !*** ../~/famous/core/Transform.js ***!
   \*************************************/
@@ -5942,7 +6176,7 @@
 	module.exports = Transform;
 
 /***/ },
-/* 31 */
+/* 33 */
 /*!************************************!*\
   !*** ../~/famous/core/Modifier.js ***!
   \************************************/
@@ -5955,9 +6189,9 @@
 	 * @license MPL 2.0
 	 * @copyright Famous Industries, Inc. 2015
 	 */
-	var Transform = __webpack_require__(/*! ./Transform */ 30);
+	var Transform = __webpack_require__(/*! ./Transform */ 32);
 	var Transitionable = __webpack_require__(/*! ../transitions/Transitionable */ 44);
-	var TransitionableTransform = __webpack_require__(/*! ../transitions/TransitionableTransform */ 46);
+	var TransitionableTransform = __webpack_require__(/*! ../transitions/TransitionableTransform */ 47);
 	function Modifier(options) {
 	    this._transformGetter = null;
 	    this._opacityGetter = null;
@@ -6202,7 +6436,7 @@
 	module.exports = Modifier;
 
 /***/ },
-/* 32 */
+/* 34 */
 /*!**********************************************!*\
   !*** ../~/famous/modifiers/StateModifier.js ***!
   \**********************************************/
@@ -6215,10 +6449,10 @@
 	 * @license MPL 2.0
 	 * @copyright Famous Industries, Inc. 2015
 	 */
-	var Modifier = __webpack_require__(/*! ../core/Modifier */ 31);
-	var Transform = __webpack_require__(/*! ../core/Transform */ 30);
+	var Modifier = __webpack_require__(/*! ../core/Modifier */ 33);
+	var Transform = __webpack_require__(/*! ../core/Transform */ 32);
 	var Transitionable = __webpack_require__(/*! ../transitions/Transitionable */ 44);
-	var TransitionableTransform = __webpack_require__(/*! ../transitions/TransitionableTransform */ 46);
+	var TransitionableTransform = __webpack_require__(/*! ../transitions/TransitionableTransform */ 47);
 	function StateModifier(options) {
 	    this._transformState = new TransitionableTransform(Transform.identity);
 	    this._opacityState = new Transitionable(1);
@@ -6364,119 +6598,7 @@
 	module.exports = StateModifier;
 
 /***/ },
-/* 33 */
-/*!**************************************!*\
-  !*** ../~/famous/core/RenderNode.js ***!
-  \**************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	/* This Source Code Form is subject to the terms of the Mozilla Public
-	 * License, v. 2.0. If a copy of the MPL was not distributed with this
-	 * file, You can obtain one at http://mozilla.org/MPL/2.0/.
-	 *
-	 * @license MPL 2.0
-	 * @copyright Famous Industries, Inc. 2015
-	 */
-	var Entity = __webpack_require__(/*! ./Entity */ 37);
-	var SpecParser = __webpack_require__(/*! ./SpecParser */ 47);
-	function RenderNode(object) {
-	    this._object = null;
-	    this._child = null;
-	    this._hasMultipleChildren = false;
-	    this._isRenderable = false;
-	    this._isModifier = false;
-	    this._resultCache = {};
-	    this._prevResults = {};
-	    this._childResult = null;
-	    if (object)
-	        this.set(object);
-	}
-	RenderNode.prototype.add = function add(child) {
-	    var childNode = child instanceof RenderNode ? child : new RenderNode(child);
-	    if (this._child instanceof Array)
-	        this._child.push(childNode);
-	    else if (this._child) {
-	        this._child = [
-	            this._child,
-	            childNode
-	        ];
-	        this._hasMultipleChildren = true;
-	        this._childResult = [];
-	    } else
-	        this._child = childNode;
-	    return childNode;
-	};
-	RenderNode.prototype.get = function get() {
-	    return this._object || (this._hasMultipleChildren ? null : this._child ? this._child.get() : null);
-	};
-	RenderNode.prototype.set = function set(child) {
-	    this._childResult = null;
-	    this._hasMultipleChildren = false;
-	    this._isRenderable = child.render ? true : false;
-	    this._isModifier = child.modify ? true : false;
-	    this._object = child;
-	    this._child = null;
-	    if (child instanceof RenderNode)
-	        return child;
-	    else
-	        return this;
-	};
-	RenderNode.prototype.getSize = function getSize() {
-	    var result = null;
-	    var target = this.get();
-	    if (target && target.getSize)
-	        result = target.getSize();
-	    if (!result && this._child && this._child.getSize)
-	        result = this._child.getSize();
-	    return result;
-	};
-	function _applyCommit(spec, context, cacheStorage) {
-	    var result = SpecParser.parse(spec, context);
-	    var keys = Object.keys(result);
-	    for (var i = 0; i < keys.length; i++) {
-	        var id = keys[i];
-	        var childNode = Entity.get(id);
-	        var commitParams = result[id];
-	        commitParams.allocator = context.allocator;
-	        var commitResult = childNode.commit(commitParams);
-	        if (commitResult)
-	            _applyCommit(commitResult, context, cacheStorage);
-	        else
-	            cacheStorage[id] = commitParams;
-	    }
-	}
-	RenderNode.prototype.commit = function commit(context) {
-	    var prevKeys = Object.keys(this._prevResults);
-	    for (var i = 0; i < prevKeys.length; i++) {
-	        var id = prevKeys[i];
-	        if (this._resultCache[id] === undefined) {
-	            var object = Entity.get(id);
-	            if (object.cleanup)
-	                object.cleanup(context.allocator);
-	        }
-	    }
-	    this._prevResults = this._resultCache;
-	    this._resultCache = {};
-	    _applyCommit(this.render(), context, this._resultCache);
-	};
-	RenderNode.prototype.render = function render() {
-	    if (this._isRenderable)
-	        return this._object.render();
-	    var result = null;
-	    if (this._hasMultipleChildren) {
-	        result = this._childResult;
-	        var children = this._child;
-	        for (var i = 0; i < children.length; i++) {
-	            result[i] = children[i].render();
-	        }
-	    } else if (this._child)
-	        result = this._child.render();
-	    return this._isModifier ? this._object.modify(result) : result;
-	};
-	module.exports = RenderNode;
-
-/***/ },
-/* 34 */
+/* 35 */
 /*!**************************************!*\
   !*** ../~/famous/utilities/Timer.js ***!
   \**************************************/
@@ -6489,7 +6611,7 @@
 	 * @license MPL 2.0
 	 * @copyright Famous Industries, Inc. 2015
 	 */
-	var FamousEngine = __webpack_require__(/*! ../core/Engine */ 11);
+	var FamousEngine = __webpack_require__(/*! ../core/Engine */ 7);
 	var _event = 'prerender';
 	var getTime = window.performance && window.performance.now ? function () {
 	    return window.performance.now();
@@ -6583,78 +6705,6 @@
 	};
 
 /***/ },
-/* 35 */
-/*!****************************************!*\
-  !*** ../~/famous/utilities/Utility.js ***!
-  \****************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	/* This Source Code Form is subject to the terms of the Mozilla Public
-	 * License, v. 2.0. If a copy of the MPL was not distributed with this
-	 * file, You can obtain one at http://mozilla.org/MPL/2.0/.
-	 *
-	 * @license MPL 2.0
-	 * @copyright Famous Industries, Inc. 2015
-	 */
-	var Utility = {};
-	Utility.Direction = {
-	    X: 0,
-	    Y: 1,
-	    Z: 2
-	};
-	Utility.after = function after(count, callback) {
-	    var counter = count;
-	    return function () {
-	        counter--;
-	        if (counter === 0)
-	            callback.apply(this, arguments);
-	    };
-	};
-	Utility.loadURL = function loadURL(url, callback) {
-	    var xhr = new XMLHttpRequest();
-	    xhr.onreadystatechange = function onreadystatechange() {
-	        if (this.readyState === 4) {
-	            if (callback)
-	                callback(this.responseText);
-	        }
-	    };
-	    xhr.open('GET', url);
-	    xhr.send();
-	};
-	Utility.createDocumentFragmentFromHTML = function createDocumentFragmentFromHTML(html) {
-	    var element = document.createElement('div');
-	    element.innerHTML = html;
-	    var result = document.createDocumentFragment();
-	    while (element.hasChildNodes())
-	        result.appendChild(element.firstChild);
-	    return result;
-	};
-	Utility.clone = function clone(b) {
-	    var a;
-	    if (typeof b === 'object') {
-	        a = b instanceof Array ? [] : {};
-	        for (var key in b) {
-	            if (typeof b[key] === 'object' && b[key] !== null) {
-	                if (b[key] instanceof Array) {
-	                    a[key] = new Array(b[key].length);
-	                    for (var i = 0; i < b[key].length; i++) {
-	                        a[key][i] = Utility.clone(b[key][i]);
-	                    }
-	                } else {
-	                    a[key] = Utility.clone(b[key]);
-	                }
-	            } else {
-	                a[key] = b[key];
-	            }
-	        }
-	    } else {
-	        a = b;
-	    }
-	    return a;
-	};
-	module.exports = Utility;
-
-/***/ },
 /* 36 */
 /*!*****************************************!*\
   !*** ../~/famous/core/ElementOutput.js ***!
@@ -6670,7 +6720,7 @@
 	 */
 	var Entity = __webpack_require__(/*! ./Entity */ 37);
 	var EventHandler = __webpack_require__(/*! ./EventHandler */ 28);
-	var Transform = __webpack_require__(/*! ./Transform */ 30);
+	var Transform = __webpack_require__(/*! ./Transform */ 32);
 	var usePrefix = !('transform' in document.documentElement.style);
 	var devicePixelRatio = window.devicePixelRatio || 1;
 	function ElementOutput(element) {
@@ -7164,7 +7214,7 @@
 	!(__WEBPACK_AMD_DEFINE_RESULT__ = function(require, exports, module) {
 	
 	    // import dependencies
-	    var Utility = __webpack_require__(/*! famous/utilities/Utility */ 35);
+	    var Utility = __webpack_require__(/*! famous/utilities/Utility */ 31);
 	
 	    /**
 	     * @class
@@ -8226,7 +8276,7 @@
 	!(__WEBPACK_AMD_DEFINE_RESULT__ = function(require, exports, module) {
 	
 	    // import dependencies
-	    var Transform = __webpack_require__(/*! famous/core/Transform */ 30);
+	    var Transform = __webpack_require__(/*! famous/core/Transform */ 32);
 	    var LayoutUtility = __webpack_require__(/*! ./LayoutUtility */ 39);
 	
 	    /**
@@ -8436,7 +8486,7 @@
 	
 	    // import dependencies
 	    var OptionsManager = __webpack_require__(/*! famous/core/OptionsManager */ 29);
-	    var Transform = __webpack_require__(/*! famous/core/Transform */ 30);
+	    var Transform = __webpack_require__(/*! famous/core/Transform */ 32);
 	    var Vector = __webpack_require__(/*! famous/math/Vector */ 49);
 	    var Particle = __webpack_require__(/*! famous/physics/bodies/Particle */ 50);
 	    var Spring = __webpack_require__(/*! famous/physics/forces/Spring */ 51);
@@ -9233,138 +9283,6 @@
 
 /***/ },
 /* 46 */
-/*!**********************************************************!*\
-  !*** ../~/famous/transitions/TransitionableTransform.js ***!
-  \**********************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	/* This Source Code Form is subject to the terms of the Mozilla Public
-	 * License, v. 2.0. If a copy of the MPL was not distributed with this
-	 * file, You can obtain one at http://mozilla.org/MPL/2.0/.
-	 *
-	 * @license MPL 2.0
-	 * @copyright Famous Industries, Inc. 2015
-	 */
-	var Transitionable = __webpack_require__(/*! ./Transitionable */ 44);
-	var Transform = __webpack_require__(/*! ../core/Transform */ 30);
-	var Utility = __webpack_require__(/*! ../utilities/Utility */ 35);
-	function TransitionableTransform(transform) {
-	    this._final = Transform.identity.slice();
-	    this._finalTranslate = [
-	        0,
-	        0,
-	        0
-	    ];
-	    this._finalRotate = [
-	        0,
-	        0,
-	        0
-	    ];
-	    this._finalSkew = [
-	        0,
-	        0,
-	        0
-	    ];
-	    this._finalScale = [
-	        1,
-	        1,
-	        1
-	    ];
-	    this.translate = new Transitionable(this._finalTranslate);
-	    this.rotate = new Transitionable(this._finalRotate);
-	    this.skew = new Transitionable(this._finalSkew);
-	    this.scale = new Transitionable(this._finalScale);
-	    if (transform)
-	        this.set(transform);
-	}
-	function _build() {
-	    return Transform.build({
-	        translate: this.translate.get(),
-	        rotate: this.rotate.get(),
-	        skew: this.skew.get(),
-	        scale: this.scale.get()
-	    });
-	}
-	function _buildFinal() {
-	    return Transform.build({
-	        translate: this._finalTranslate,
-	        rotate: this._finalRotate,
-	        skew: this._finalSkew,
-	        scale: this._finalScale
-	    });
-	}
-	TransitionableTransform.prototype.setTranslate = function setTranslate(translate, transition, callback) {
-	    this._finalTranslate = translate;
-	    this._final = _buildFinal.call(this);
-	    this.translate.set(translate, transition, callback);
-	    return this;
-	};
-	TransitionableTransform.prototype.setScale = function setScale(scale, transition, callback) {
-	    this._finalScale = scale;
-	    this._final = _buildFinal.call(this);
-	    this.scale.set(scale, transition, callback);
-	    return this;
-	};
-	TransitionableTransform.prototype.setRotate = function setRotate(eulerAngles, transition, callback) {
-	    this._finalRotate = eulerAngles;
-	    this._final = _buildFinal.call(this);
-	    this.rotate.set(eulerAngles, transition, callback);
-	    return this;
-	};
-	TransitionableTransform.prototype.setSkew = function setSkew(skewAngles, transition, callback) {
-	    this._finalSkew = skewAngles;
-	    this._final = _buildFinal.call(this);
-	    this.skew.set(skewAngles, transition, callback);
-	    return this;
-	};
-	TransitionableTransform.prototype.set = function set(transform, transition, callback) {
-	    var components = Transform.interpret(transform);
-	    this._finalTranslate = components.translate;
-	    this._finalRotate = components.rotate;
-	    this._finalSkew = components.skew;
-	    this._finalScale = components.scale;
-	    this._final = transform;
-	    var _callback = callback ? Utility.after(4, callback) : null;
-	    this.translate.set(components.translate, transition, _callback);
-	    this.rotate.set(components.rotate, transition, _callback);
-	    this.skew.set(components.skew, transition, _callback);
-	    this.scale.set(components.scale, transition, _callback);
-	    return this;
-	};
-	TransitionableTransform.prototype.setDefaultTransition = function setDefaultTransition(transition) {
-	    this.translate.setDefault(transition);
-	    this.rotate.setDefault(transition);
-	    this.skew.setDefault(transition);
-	    this.scale.setDefault(transition);
-	};
-	TransitionableTransform.prototype.get = function get() {
-	    if (this.isActive()) {
-	        return _build.call(this);
-	    } else
-	        return this._final;
-	};
-	TransitionableTransform.prototype.getFinal = function getFinal() {
-	    return this._final;
-	};
-	TransitionableTransform.prototype.isActive = function isActive() {
-	    return this.translate.isActive() || this.rotate.isActive() || this.scale.isActive() || this.skew.isActive();
-	};
-	TransitionableTransform.prototype.halt = function halt() {
-	    this.translate.halt();
-	    this.rotate.halt();
-	    this.skew.halt();
-	    this.scale.halt();
-	    this._final = this.get();
-	    this._finalTranslate = this.translate.get();
-	    this._finalRotate = this.rotate.get();
-	    this._finalSkew = this.skew.get();
-	    this._finalScale = this.scale.get();
-	    return this;
-	};
-	module.exports = TransitionableTransform;
-
-/***/ },
-/* 47 */
 /*!**************************************!*\
   !*** ../~/famous/core/SpecParser.js ***!
   \**************************************/
@@ -9377,7 +9295,7 @@
 	 * @license MPL 2.0
 	 * @copyright Famous Industries, Inc. 2015
 	 */
-	var Transform = __webpack_require__(/*! ./Transform */ 30);
+	var Transform = __webpack_require__(/*! ./Transform */ 32);
 	function SpecParser() {
 	    this.result = {};
 	}
@@ -9501,6 +9419,138 @@
 	    }
 	};
 	module.exports = SpecParser;
+
+/***/ },
+/* 47 */
+/*!**********************************************************!*\
+  !*** ../~/famous/transitions/TransitionableTransform.js ***!
+  \**********************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	/* This Source Code Form is subject to the terms of the Mozilla Public
+	 * License, v. 2.0. If a copy of the MPL was not distributed with this
+	 * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+	 *
+	 * @license MPL 2.0
+	 * @copyright Famous Industries, Inc. 2015
+	 */
+	var Transitionable = __webpack_require__(/*! ./Transitionable */ 44);
+	var Transform = __webpack_require__(/*! ../core/Transform */ 32);
+	var Utility = __webpack_require__(/*! ../utilities/Utility */ 31);
+	function TransitionableTransform(transform) {
+	    this._final = Transform.identity.slice();
+	    this._finalTranslate = [
+	        0,
+	        0,
+	        0
+	    ];
+	    this._finalRotate = [
+	        0,
+	        0,
+	        0
+	    ];
+	    this._finalSkew = [
+	        0,
+	        0,
+	        0
+	    ];
+	    this._finalScale = [
+	        1,
+	        1,
+	        1
+	    ];
+	    this.translate = new Transitionable(this._finalTranslate);
+	    this.rotate = new Transitionable(this._finalRotate);
+	    this.skew = new Transitionable(this._finalSkew);
+	    this.scale = new Transitionable(this._finalScale);
+	    if (transform)
+	        this.set(transform);
+	}
+	function _build() {
+	    return Transform.build({
+	        translate: this.translate.get(),
+	        rotate: this.rotate.get(),
+	        skew: this.skew.get(),
+	        scale: this.scale.get()
+	    });
+	}
+	function _buildFinal() {
+	    return Transform.build({
+	        translate: this._finalTranslate,
+	        rotate: this._finalRotate,
+	        skew: this._finalSkew,
+	        scale: this._finalScale
+	    });
+	}
+	TransitionableTransform.prototype.setTranslate = function setTranslate(translate, transition, callback) {
+	    this._finalTranslate = translate;
+	    this._final = _buildFinal.call(this);
+	    this.translate.set(translate, transition, callback);
+	    return this;
+	};
+	TransitionableTransform.prototype.setScale = function setScale(scale, transition, callback) {
+	    this._finalScale = scale;
+	    this._final = _buildFinal.call(this);
+	    this.scale.set(scale, transition, callback);
+	    return this;
+	};
+	TransitionableTransform.prototype.setRotate = function setRotate(eulerAngles, transition, callback) {
+	    this._finalRotate = eulerAngles;
+	    this._final = _buildFinal.call(this);
+	    this.rotate.set(eulerAngles, transition, callback);
+	    return this;
+	};
+	TransitionableTransform.prototype.setSkew = function setSkew(skewAngles, transition, callback) {
+	    this._finalSkew = skewAngles;
+	    this._final = _buildFinal.call(this);
+	    this.skew.set(skewAngles, transition, callback);
+	    return this;
+	};
+	TransitionableTransform.prototype.set = function set(transform, transition, callback) {
+	    var components = Transform.interpret(transform);
+	    this._finalTranslate = components.translate;
+	    this._finalRotate = components.rotate;
+	    this._finalSkew = components.skew;
+	    this._finalScale = components.scale;
+	    this._final = transform;
+	    var _callback = callback ? Utility.after(4, callback) : null;
+	    this.translate.set(components.translate, transition, _callback);
+	    this.rotate.set(components.rotate, transition, _callback);
+	    this.skew.set(components.skew, transition, _callback);
+	    this.scale.set(components.scale, transition, _callback);
+	    return this;
+	};
+	TransitionableTransform.prototype.setDefaultTransition = function setDefaultTransition(transition) {
+	    this.translate.setDefault(transition);
+	    this.rotate.setDefault(transition);
+	    this.skew.setDefault(transition);
+	    this.scale.setDefault(transition);
+	};
+	TransitionableTransform.prototype.get = function get() {
+	    if (this.isActive()) {
+	        return _build.call(this);
+	    } else
+	        return this._final;
+	};
+	TransitionableTransform.prototype.getFinal = function getFinal() {
+	    return this._final;
+	};
+	TransitionableTransform.prototype.isActive = function isActive() {
+	    return this.translate.isActive() || this.rotate.isActive() || this.scale.isActive() || this.skew.isActive();
+	};
+	TransitionableTransform.prototype.halt = function halt() {
+	    this.translate.halt();
+	    this.rotate.halt();
+	    this.skew.halt();
+	    this.scale.halt();
+	    this._final = this.get();
+	    this._finalTranslate = this.translate.get();
+	    this._finalRotate = this.rotate.get();
+	    this._finalSkew = this.skew.get();
+	    this._finalScale = this.scale.get();
+	    return this;
+	};
+	module.exports = TransitionableTransform;
 
 /***/ },
 /* 48 */
@@ -9950,7 +10000,7 @@
 	 * @copyright Famous Industries, Inc. 2015
 	 */
 	var Vector = __webpack_require__(/*! ../../math/Vector */ 49);
-	var Transform = __webpack_require__(/*! ../../core/Transform */ 30);
+	var Transform = __webpack_require__(/*! ../../core/Transform */ 32);
 	var EventHandler = __webpack_require__(/*! ../../core/EventHandler */ 28);
 	var Integrator = __webpack_require__(/*! ../integrators/SymplecticEuler */ 55);
 	function Particle(options) {
@@ -10580,7 +10630,7 @@
 	 * @license MPL 2.0
 	 * @copyright Famous Industries, Inc. 2015
 	 */
-	var Utility = __webpack_require__(/*! ../utilities/Utility */ 35);
+	var Utility = __webpack_require__(/*! ../utilities/Utility */ 31);
 	function MultipleTransition(method) {
 	    this.method = method;
 	    this._instances = [];
