@@ -86,13 +86,14 @@ define(function(require, exports, module) {
                 var dock = new LayoutDockHelper(context, options);
                 dock.fill('background');
                 dock.top('navBarBackground', this.options.navBar.height, 1);
+                var z = 5;
                 context.set('navBarTitle', {
                     size: [context.size[0], this.options.navBar.height],
-                    translate: [0, 0, 2]
+                    translate: [0, 0, 5]
                 });
                 context.set('navBarImage', {
                     size: [32, 32],
-                    translate: [this.options.left ? 20 : (context.size[0] - 20 - 32), 9, 2]
+                    translate: [this.options.left ? 20 : (context.size[0] - 20 - 32), 9, 5]
                 });
                 dock.top(undefined, 20);
                 dock.fill('content', 1);

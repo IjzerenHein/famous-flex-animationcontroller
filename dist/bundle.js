@@ -61,18 +61,18 @@
 	
 	    //<webpack>
 	    __webpack_require__(/*! famous-polyfills */ 5);
-	    __webpack_require__(/*! famous/core/famous.css */ 11);
-	    __webpack_require__(/*! ./styles.css */ 9);
-	    __webpack_require__(/*! ./index.html */ 6);
+	    __webpack_require__(/*! famous/core/famous.css */ 9);
+	    __webpack_require__(/*! ./styles.css */ 6);
+	    __webpack_require__(/*! ./index.html */ 8);
 	    //</webpack>
 	
 	    // import dependencies
-	    var Engine = __webpack_require__(/*! famous/core/Engine */ 7);
+	    var Engine = __webpack_require__(/*! famous/core/Engine */ 11);
 	    var AnimationController = __webpack_require__(/*! famous-flex/AnimationController */ 13);
 	    var ProfileView = __webpack_require__(/*! ./views/ProfileView */ 1);
 	    var FullImageView = __webpack_require__(/*! ./views/FullImageView */ 2);
 	    var NavBarView = __webpack_require__(/*! ./views/NavBarView */ 3);
-	    var Easing = __webpack_require__(/*! famous/transitions/Easing */ 8);
+	    var Easing = __webpack_require__(/*! famous/transitions/Easing */ 12);
 	    var PhoneFrameView = __webpack_require__(/*! ./PhoneFrameView */ 4);
 	    var FastClick = __webpack_require__(/*! fastclick/lib/fastclick */ 14);
 	    FastClick.attach(document.body);
@@ -440,13 +440,14 @@
 	                var dock = new LayoutDockHelper(context, options);
 	                dock.fill('background');
 	                dock.top('navBarBackground', this.options.navBar.height, 1);
+	                var z = 5;
 	                context.set('navBarTitle', {
 	                    size: [context.size[0], this.options.navBar.height],
-	                    translate: [0, 0, 2]
+	                    translate: [0, 0, 5]
 	                });
 	                context.set('navBarImage', {
 	                    size: [32, 32],
-	                    translate: [this.options.left ? 20 : (context.size[0] - 20 - 32), 9, 2]
+	                    translate: [this.options.left ? 20 : (context.size[0] - 20 - 32), 9, 5]
 	                });
 	                dock.top(undefined, 20);
 	                dock.fill('content', 1);
@@ -607,21 +608,22 @@
 	                    (context.size[1] - imageSize[1]) / 2,
 	                    100
 	                ];
+	                var z = 10;
 	                context.set('left', {
 	                    size: [imageTranslate[0] + margins[3], context.size[1]],
-	                    translate: [0, 0, 99]
+	                    translate: [0, 0, imageTranslate[2] - z]
 	                });
 	                context.set('right', {
 	                    size: [context.size[0] - imageTranslate[0] - imageSize[0] + margins[1], context.size[1]],
-	                    translate: [imageTranslate[0] + imageSize[0] - margins[1], 0, 99]
+	                    translate: [imageTranslate[0] + imageSize[0] - margins[1], 0, imageTranslate[2] - z]
 	                });
 	                context.set('top', {
 	                    size: [context.size[0], imageTranslate[1] + margins[0]],
-	                    translate: [0, 0, 99]
+	                    translate: [0, 0, imageTranslate[2] - z]
 	                });
 	                context.set('bottom', {
 	                    size: [context.size[0], context.size[1] - imageTranslate[1] - imageSize[1] + margins[2]],
-	                    translate: [0, imageTranslate[1] + imageSize[1] - margins[2], 99]
+	                    translate: [0, imageTranslate[1] + imageSize[1] - margins[2], imageTranslate[2] - z]
 	                });
 	                var content = context.set('content', {
 	                    size: [
@@ -667,6 +669,33 @@
 /***/ },
 /* 6 */
 /*!********************!*\
+  !*** ./styles.css ***!
+  \********************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	var dispose = __webpack_require__(/*! ../~/style-loader/addStyle.js */ 19)
+		// The css code:
+		(__webpack_require__(/*! !../~/css-loader!./styles.css */ 7));
+	// Hot Module Replacement
+	if(false) {
+		module.hot.accept();
+		module.hot.dispose(dispose);
+	}
+
+/***/ },
+/* 7 */
+/*!************************************!*\
+  !*** ../~/css-loader!./styles.css ***!
+  \************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports =
+		"body, div {\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n\n  /* prevent text selection */\n  -moz-user-select: -moz-none;\n \t-khtml-user-select: none;\n \t-webkit-user-select: none;\n \t-ms-user-select: none;\n \tuser-select: none;\n}\nbody {\n  background-color: #333333;\n}\n\n.frame.background {\n  -background-color: #333333;\n  background-color: white;\n}\n.frame.background.inner {\n  background-color: #FAFAFA;\n}\n\n.view.background {\n  background-color: #FAFAFA;\n}\n.view.image {\n  border-radius: 50%;\n}\n.view.text {\n  text-align: center;\n  font-size: 16px;\n}\n\n.view.navbar.title > div, .view.profile.name > div {\n  text-align: center;\n  font-size: 18px;\n  color: #444444;\n  /* align vertical */\n  display: block;\n  position: relative;\n  top: 50%;\n  -webkit-transform: translateY(-50%);\n  -moz-transform: translateY(-50%);\n  -ms-transform: translateY(-50%);\n  -o-transform: translateY(-50%);\n  transform: translateY(-50%);\n}\n.view.profile.text {\n  padding: 0 25px;\n  font-size: 16px;\n  color: #888888;\n}\n.view.navbar.title > div {\n  color: #666666;\n}\n.view.navbar.background {\n  background-color: #EEEEEE;\n  border-bottom: 1px solid #DDDDDD;\n}\n";
+
+/***/ },
+/* 8 */
+/*!********************!*\
   !*** ./index.html ***!
   \********************/
 /***/ function(module, exports, __webpack_require__) {
@@ -674,7 +703,34 @@
 	module.exports = __webpack_require__.p + "index.html"
 
 /***/ },
-/* 7 */
+/* 9 */
+/*!***********************************!*\
+  !*** ../~/famous/core/famous.css ***!
+  \***********************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	var dispose = __webpack_require__(/*! ../~/style-loader/addStyle.js */ 19)
+		// The css code:
+		(__webpack_require__(/*! !../~/css-loader!../~/famous/core/famous.css */ 10));
+	// Hot Module Replacement
+	if(false) {
+		module.hot.accept();
+		module.hot.dispose(dispose);
+	}
+
+/***/ },
+/* 10 */
+/*!***************************************************!*\
+  !*** ../~/css-loader!../~/famous/core/famous.css ***!
+  \***************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports =
+		"/* This Source Code Form is subject to the terms of the Mozilla Public\n * License, v. 2.0. If a copy of the MPL was not distributed with this\n * file, You can obtain one at http://mozilla.org/MPL/2.0/.\n *\n * Owner: mark@famo.us\n * @license MPL 2.0\n * @copyright Famous Industries, Inc. 2015\n */\n\n.famous-root {\n    width: 100%;\n    height: 100%;\n    margin: 0px;\n    padding: 0px;\n    opacity: .999999; /* ios8 hotfix */\n    overflow: hidden;\n    -webkit-transform-style: preserve-3d;\n    transform-style: preserve-3d;\n}\n\n.famous-container, .famous-group {\n    position: absolute;\n    top: 0px;\n    left: 0px;\n    bottom: 0px;\n    right: 0px;\n    overflow: visible;\n    -webkit-transform-style: preserve-3d;\n    transform-style: preserve-3d;\n    -webkit-backface-visibility: visible;\n    backface-visibility: visible;\n    pointer-events: none;\n}\n\n.famous-group {\n    width: 0px;\n    height: 0px;\n    margin: 0px;\n    padding: 0px;\n}\n\n.famous-surface {\n    position: absolute;\n    -webkit-transform-origin: center center;\n    transform-origin: center center;\n    -webkit-backface-visibility: hidden;\n    backface-visibility: hidden;\n    -webkit-transform-style: preserve-3d;\n    transform-style: preserve-3d;\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n    -webkit-tap-highlight-color: transparent;\n    pointer-events: auto;\n}\n\n.famous-container-group {\n    position: relative;\n    width: 100%;\n    height: 100%;\n}\n";
+
+/***/ },
+/* 11 */
 /*!**********************************!*\
   !*** ../~/famous/core/Engine.js ***!
   \**********************************/
@@ -860,7 +916,7 @@
 	module.exports = Engine;
 
 /***/ },
-/* 8 */
+/* 12 */
 /*!*****************************************!*\
   !*** ../~/famous/transitions/Easing.js ***!
   \*****************************************/
@@ -1034,60 +1090,6 @@
 	module.exports = Easing;
 
 /***/ },
-/* 9 */
-/*!********************!*\
-  !*** ./styles.css ***!
-  \********************/
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-	var dispose = __webpack_require__(/*! ../~/style-loader/addStyle.js */ 19)
-		// The css code:
-		(__webpack_require__(/*! !../~/css-loader!./styles.css */ 10));
-	// Hot Module Replacement
-	if(false) {
-		module.hot.accept();
-		module.hot.dispose(dispose);
-	}
-
-/***/ },
-/* 10 */
-/*!************************************!*\
-  !*** ../~/css-loader!./styles.css ***!
-  \************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports =
-		"body, div {\n  font-family: \"HelveticaNeue-Light\", \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;\n\n  /* prevent text selection */\n  -moz-user-select: -moz-none;\n \t-khtml-user-select: none;\n \t-webkit-user-select: none;\n \t-ms-user-select: none;\n \tuser-select: none;\n}\nbody {\n  background-color: #333333;\n}\n\n.frame.background {\n  -background-color: #333333;\n  background-color: white;\n}\n.frame.background.inner {\n  background-color: #FAFAFA;\n}\n\n.view.background {\n  background-color: #FAFAFA;\n}\n.view.image {\n  border-radius: 50%;\n}\n.view.text {\n  text-align: center;\n  font-size: 16px;\n}\n\n.view.navbar.title > div, .view.profile.name > div {\n  text-align: center;\n  font-size: 18px;\n  color: #444444;\n  /* align vertical */\n  display: block;\n  position: relative;\n  top: 50%;\n  -webkit-transform: translateY(-50%);\n  -moz-transform: translateY(-50%);\n  -ms-transform: translateY(-50%);\n  -o-transform: translateY(-50%);\n  transform: translateY(-50%);\n}\n.view.profile.text {\n  padding: 0 25px;\n  font-size: 16px;\n  color: #888888;\n}\n.view.navbar.title > div {\n  color: #666666;\n}\n.view.navbar.background {\n  background-color: #EEEEEE;\n  border-bottom: 1px solid #DDDDDD;\n}\n";
-
-/***/ },
-/* 11 */
-/*!***********************************!*\
-  !*** ../~/famous/core/famous.css ***!
-  \***********************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-	var dispose = __webpack_require__(/*! ../~/style-loader/addStyle.js */ 19)
-		// The css code:
-		(__webpack_require__(/*! !../~/css-loader!../~/famous/core/famous.css */ 12));
-	// Hot Module Replacement
-	if(false) {
-		module.hot.accept();
-		module.hot.dispose(dispose);
-	}
-
-/***/ },
-/* 12 */
-/*!***************************************************!*\
-  !*** ../~/css-loader!../~/famous/core/famous.css ***!
-  \***************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports =
-		"/* This Source Code Form is subject to the terms of the Mozilla Public\n * License, v. 2.0. If a copy of the MPL was not distributed with this\n * file, You can obtain one at http://mozilla.org/MPL/2.0/.\n *\n * Owner: mark@famo.us\n * @license MPL 2.0\n * @copyright Famous Industries, Inc. 2015\n */\n\n.famous-root {\n    width: 100%;\n    height: 100%;\n    margin: 0px;\n    padding: 0px;\n    opacity: .999999; /* ios8 hotfix */\n    overflow: hidden;\n    -webkit-transform-style: preserve-3d;\n    transform-style: preserve-3d;\n}\n\n.famous-container, .famous-group {\n    position: absolute;\n    top: 0px;\n    left: 0px;\n    bottom: 0px;\n    right: 0px;\n    overflow: visible;\n    -webkit-transform-style: preserve-3d;\n    transform-style: preserve-3d;\n    -webkit-backface-visibility: visible;\n    backface-visibility: visible;\n    pointer-events: none;\n}\n\n.famous-group {\n    width: 0px;\n    height: 0px;\n    margin: 0px;\n    padding: 0px;\n}\n\n.famous-surface {\n    position: absolute;\n    -webkit-transform-origin: center center;\n    transform-origin: center center;\n    -webkit-backface-visibility: hidden;\n    backface-visibility: hidden;\n    -webkit-transform-style: preserve-3d;\n    transform-style: preserve-3d;\n    -webkit-box-sizing: border-box;\n    -moz-box-sizing: border-box;\n    box-sizing: border-box;\n    -webkit-tap-highlight-color: transparent;\n    pointer-events: auto;\n}\n\n.famous-container-group {\n    position: relative;\n    width: 100%;\n    height: 100%;\n}\n";
-
-/***/ },
 /* 13 */
 /*!***************************************************!*\
   !*** ../~/famous-flex/src/AnimationController.js ***!
@@ -1114,12 +1116,13 @@
 	    // import dependencies
 	    var View = __webpack_require__(/*! famous/core/View */ 15);
 	    var LayoutController = __webpack_require__(/*! ./LayoutController */ 17);
-	    var Transform = __webpack_require__(/*! famous/core/Transform */ 32);
-	    var Modifier = __webpack_require__(/*! famous/core/Modifier */ 33);
-	    var StateModifier = __webpack_require__(/*! famous/modifiers/StateModifier */ 34);
-	    var RenderNode = __webpack_require__(/*! famous/core/RenderNode */ 30);
-	    var Timer = __webpack_require__(/*! famous/utilities/Timer */ 35);
-	    var Easing = __webpack_require__(/*! famous/transitions/Easing */ 8);
+	    var Transform = __webpack_require__(/*! famous/core/Transform */ 30);
+	    var Modifier = __webpack_require__(/*! famous/core/Modifier */ 31);
+	    var StateModifier = __webpack_require__(/*! famous/modifiers/StateModifier */ 32);
+	    var RenderNode = __webpack_require__(/*! famous/core/RenderNode */ 33);
+	    var Timer = __webpack_require__(/*! famous/utilities/Timer */ 34);
+	    var Easing = __webpack_require__(/*! famous/transitions/Easing */ 12);
+	    //var Transitionable = require('famous/animations/Transitionable');
 	
 	    /**
 	     * @class
@@ -1143,6 +1146,7 @@
 	    function AnimationController(options) {
 	        View.apply(this, arguments);
 	
+	        this._size = [0, 0];
 	        _createLayout.call(this);
 	
 	        if (options) {
@@ -1251,6 +1255,8 @@
 	            size: context.size,
 	            translate: [0, 0, 0]
 	        };
+	        this._size[0] = context.size[0];
+	        this._size[1] = context.size[1];
 	        var views = context.get('views');
 	        var transferables = context.get('transferables');
 	        for (var i = 0; i < Math.min(views.length, 2); i++) {
@@ -1300,7 +1306,7 @@
 	            dataSource: this._renderables
 	        });
 	        this.add(this.layout);
-	        this.layout.on('layoutend', _startAnimations.bind(this));
+	        this.layout.on('layoutend', _processAnimations.bind(this));
 	    }
 	
 	    /**
@@ -1311,7 +1317,7 @@
 	            return;
 	        }
 	        var spec = view.getSpec(id);
-	        if (spec) {
+	        if (spec && !spec.trueSizeRequested) {
 	            callback(spec);
 	        }
 	        else {
@@ -1351,12 +1357,24 @@
 	     * Begins visual transfer or renderables from the previous item
 	     * to the new item.
 	     */
-	    function _startTransferableAnimations(item, prevItem) {
+	    function _initTransferableAnimations(item, prevItem, callback) {
+	        var callbackCount = 0;
+	        function waitForAll() {
+	            callbackCount--;
+	            if (callbackCount === 0) {
+	                callback();
+	            }
+	        }
 	        for (var sourceId in item.options.transfer.items) {
-	            _startTransferableAnimation.call(this, item, prevItem, sourceId);
+	            if (_initTransferableAnimation.call(this, item, prevItem, sourceId, waitForAll)) {
+	                callbackCount++;
+	            }
+	        }
+	        if (!callbackCount) {
+	            callback();
 	        }
 	    }
-	    function _startTransferableAnimation(item, prevItem, sourceId) {
+	    function _initTransferableAnimation(item, prevItem, sourceId, callback) {
 	        var target = item.options.transfer.items[sourceId];
 	        var transferable = {};
 	        transferable.source = _getTransferable.call(this, prevItem, prevItem.view, sourceId);
@@ -1377,6 +1395,7 @@
 	                // Replace source & target renderables in the views
 	                // source: dummy-node
 	                // target: target-renderable with opacity: 0.
+	                transferable.sourceSpec = sourceSpec;
 	                transferable.originalSource = transferable.source.get();
 	                transferable.source.show(new RenderNode(new Modifier(sourceSpec)));
 	                transferable.originalTarget = transferable.target.get();
@@ -1389,9 +1408,9 @@
 	                var zIndexMod = new Modifier({
 	                    transform: Transform.translate(0, 0, item.options.transfer.zIndex)
 	                });
-	                var mod = new StateModifier(sourceSpec);
+	                transferable.mod = new StateModifier(sourceSpec);
 	                transferable.renderNode = new RenderNode(zIndexMod);
-	                transferable.renderNode.add(mod).add(transferable.originalSource);
+	                transferable.renderNode.add(transferable.mod).add(transferable.originalSource);
 	                item.transferables.push(transferable);
 	                this._renderables.transferables.push(transferable.renderNode);
 	                this.layout.reflowLayout();
@@ -1400,31 +1419,52 @@
 	                // cycles if for instance, this involves a true-size renderable or the
 	                // renderable is affected by other true-size renderables around itsself.
 	                Timer.after(function() {
+	                    var callbackCalled;
 	                    transferable.target.getSpec(function(targetSpec, transition) {
-	                        mod.halt();
-	                        if ((sourceSpec.opacity !== undefined) || (targetSpec.opacity !== undefined)) {
-	                            mod.setOpacity((targetSpec.opacity === undefined) ? 1 : targetSpec.opacity, transition|| item.options.transfer.transition);
-	                        }
-	                        if (item.options.transfer.fastResize) {
-	                            if (sourceSpec.transform || targetSpec.transform || sourceSpec.size || targetSpec.size) {
-	                                var transform = targetSpec.transform || Transform.identity;
-	                                if (sourceSpec.size && targetSpec.size) {
-	                                    transform = Transform.multiply(transform, Transform.scale(targetSpec.size[0] / sourceSpec.size[0], targetSpec.size[1] / sourceSpec.size[1], 1));
-	                                }
-	                                mod.setTransform(transform, transition || item.options.transfer.transition);
-	                            }
-	                        }
-	                        else {
-	                            if (sourceSpec.transform || targetSpec.transform) {
-	                                mod.setTransform(targetSpec.transform || Transform.identity, transition || item.options.transfer.transition);
-	                            }
-	                            if (sourceSpec.size || targetSpec.size) {
-	                                mod.setSize(targetSpec.size || sourceSpec.size, transition || item.options.transfer.transition);
-	                            }
+	                        transferable.targetSpec = targetSpec;
+	                        transferable.transition = transition;
+	                        if (!callbackCalled) {
+	                            callback();
 	                        }
 	                    }, true);
 	                }, 1);
 	            }.bind(this), false);
+	            return true;
+	        }
+	        else {
+	            return false;
+	        }
+	    }
+	    function _startTransferableAnimations(item, callback) {
+	        for (var j = 0; j < item.transferables.length; j++) {
+	            var transferable = item.transferables[j];
+	            transferable.mod.halt();
+	            if ((transferable.sourceSpec.opacity !== undefined) || (transferable.targetSpec.opacity !== undefined)) {
+	                transferable.mod.setOpacity((transferable.targetSpec.opacity === undefined) ? 1 : transferable.targetSpec.opacity, transferable.transition || item.options.transfer.transition);
+	            }
+	            if (item.options.transfer.fastResize) {
+	                if (transferable.sourceSpec.transform || transferable.targetSpec.transform || transferable.sourceSpec.size || transferable.targetSpec.size) {
+	                    var transform = transferable.targetSpec.transform || Transform.identity;
+	                    if (transferable.sourceSpec.size && transferable.targetSpec.size) {
+	                        transform = Transform.multiply(transform, Transform.scale(transferable.targetSpec.size[0] / transferable.sourceSpec.size[0], transferable.targetSpec.size[1] / transferable.sourceSpec.size[1], 1));
+	                    }
+	                    transferable.mod.setTransform(transform, transferable.transition || item.options.transfer.transition, callback);
+	                    callback = undefined;
+	                }
+	            }
+	            else {
+	                if (transferable.sourceSpec.transform || transferable.targetSpec.transform) {
+	                    transferable.mod.setTransform(transferable.targetSpec.transform || Transform.identity, transferable.transition || item.options.transfer.transition, callback);
+	                    callback = undefined;
+	                }
+	                if (transferable.sourceSpec.size || transferable.targetSpec.size) {
+	                    transferable.mod.setSize(transferable.targetSpec.size || transferable.sourceSpec.size, transferable.transition || item.options.transfer.transition, callback);
+	                    callback = undefined;
+	                }
+	            }
+	        }
+	        if (callback) {
+	            callback();
 	        }
 	    }
 	
@@ -1452,19 +1492,19 @@
 	    /**
 	     * Starts a show or hide animation.
 	     */
-	    function _startAnimations(event) {
+	    function _processAnimations(event) {
 	        var prevItem;
 	        for (var i = 0; i < this._viewStack.length; i++) {
 	            var item = this._viewStack[i];
 	            switch (item.state) {
 	                case ItemState.HIDE:
 	                    item.state = ItemState.HIDING;
-	                    _startAnimation.call(this, item, prevItem, event.size, false);
+	                    _startHideAnimation.call(this, item, prevItem, event.size);
 	                    _updateState.call(this);
 	                    break;
 	                case ItemState.SHOW:
 	                    item.state = ItemState.SHOWING;
-	                    _startAnimation.call(this, item, prevItem, event.size, true);
+	                    _initShowAnimation.call(this, item, prevItem, event.size);
 	                    _updateState.call(this);
 	                    break;
 	            }
@@ -1475,38 +1515,93 @@
 	    /**
 	     * Starts the view animation.
 	     */
-	    function _startAnimation(item, prevItem, size, show) {
-	        var animation = show ? item.options.show.animation : item.options.hide.animation;
-	        var spec = animation ? animation.call(undefined, show, size) : {};
+	    function _initShowAnimation(item, prevItem, size) {
+	        var spec = item.options.show.animation ? item.options.show.animation.call(undefined, true, size) : {};
+	        item.startSpec = spec;
+	        item.endSpec = {
+	            opacity: 1,
+	            transform: Transform.identity
+	        };
 	        item.mod.halt();
-	        var callback;
-	        if (show) {
-	            callback = item.showCallback;
+	        if (spec.transform) {
+	            item.mod.setTransform(spec.transform);
+	        }
+	        if (spec.opacity !== undefined) {
+	            item.mod.setOpacity(spec.opacity);
+	        }
+	        if (spec.align) {
+	            item.mod.setAlign(spec.align);
+	        }
+	        if (spec.origin) {
+	            item.mod.setOrigin(spec.origin);
+	        }
+	        if (prevItem) {
+	            _initTransferableAnimations.call(this, item, prevItem, _startShowAnimation.bind(this, item, spec));
+	        }
+	        else {
+	            _startShowAnimation.call(this, item, spec);
+	        }
+	    }
+	
+	    /**
+	     * Starts the show animation whenever init has completed.
+	     */
+	    function _startShowAnimation(item, spec) {
+	        if (!item.halted) {
+	            var callback = item.showCallback;
 	            if (spec.transform) {
-	                item.mod.setTransform(spec.transform);
 	                item.mod.setTransform(Transform.identity, item.options.show.transition, callback);
 	                callback = undefined;
 	            }
 	            if (spec.opacity !== undefined) {
-	                item.mod.setOpacity(spec.opacity);
 	                item.mod.setOpacity(1, item.options.show.transition, callback);
 	                callback = undefined;
 	            }
-	            if (spec.align) {
-	                item.mod.setAlign(spec.align);
+	            _startTransferableAnimations.call(this, item, callback);
+	        }
+	    }
+	
+	    /**
+	     * Helper function for interpolating between start/end state based on percentage.
+	     */
+	    function _interpolate(start, end, perc) {
+	        return start + ((end - start) * perc);
+	    }
+	
+	    /**
+	     * Halts a item at a given frame. The frame is provided as a percentage
+	     * of the whole transition.
+	     */
+	    function _haltItemAtFrame(item, perc) {
+	        item.mod.halt();
+	        item.halted = true;
+	        if (item.startSpec && (perc !== undefined)) {
+	            if ((item.startSpec.opacity !== undefined) && (item.endSpec.opacity !== undefined)) {
+	                item.mod.setOpacity(_interpolate(item.startSpec.opacity, item.endSpec.opacity, perc));
 	            }
-	            if (spec.origin) {
-	                item.mod.setOrigin(spec.origin);
-	            }
-	            if (prevItem) {
-	                _startTransferableAnimations.call(this, item, prevItem);
-	            }
-	            if (callback) {
-	                callback();
+	            if (item.startSpec.transform && item.endSpec.transform) {
+	                var transform = [];
+	                for (var i = 0; i < item.startSpec.transform.length; i++) {
+	                    transform.push(_interpolate(item.startSpec.transform[i], item.endSpec.transform[i], perc));
+	                }
+	                item.mod.setTransform(transform);
 	            }
 	        }
-	        else {
-	            callback = item.hideCallback;
+	    }
+	
+	    /**
+	     * Starts the hide animation.
+	     */
+	    function _startHideAnimation(item, prevItem, size) {
+	        var spec = item.options.hide.animation ? item.options.hide.animation.call(undefined, false, size) : {};
+	        item.endSpec = spec;
+	        item.startSpec = {
+	            opacity: 1,
+	            transform: Transform.identity
+	        };
+	        if (!item.halted) {
+	            item.mod.halt();
+	            var callback = item.hideCallback;
 	            if (spec.transform) {
 	                item.mod.setTransform(spec.transform, item.options.hide.transition, callback);
 	                callback = undefined;
@@ -1590,6 +1685,39 @@
 	        }
 	    }
 	
+	    function _resume() {
+	        for (var i = 0; i < Math.min(this._viewStack.length, 2); i++) {
+	            var item = this._viewStack[i];
+	            if (item.halted) {
+	                item.halted = false;
+	                if (item.endSpec) {
+	                    var callback;
+	                    switch (item.state) {
+	                        case ItemState.HIDE:
+	                        case ItemState.HIDING:
+	                            callback = item.hideCallback;
+	                            break;
+	                        case ItemState.SHOW:
+	                        case ItemState.SHOWING:
+	                            callback = item.showCallback;
+	                            break;
+	                    }
+	                    item.mod.halt();
+	                    if (item.endSpec.transform) {
+	                        item.mod.setTransform(item.endSpec.transform, item.options.show.transition, callback);
+	                        callback = undefined;
+	                    }
+	                    if (item.endSpec.opacity !== undefined) {
+	                        item.mod.setOpacity(item.endSpec.opacity, item.options.show.transition, callback);
+	                    }
+	                    if (callback) {
+	                        callback();
+	                    }
+	                }
+	            }
+	        }
+	    }
+	
 	    /**
 	     * Shows a renderable using an animation and hides the old renderable.
 	     *
@@ -1615,6 +1743,7 @@
 	     * @return {AnimationController} this
 	     */
 	    AnimationController.prototype.show = function(renderable, options, callback) {
+	        _resume.call(this, renderable);
 	        if (!renderable) {
 	            return this.hide(options, callback);
 	        }
@@ -1625,6 +1754,9 @@
 	                item.state = ItemState.QUEUED;
 	                _setItemOptions.call(this, item, options);
 	                _updateState.call(this);
+	            }
+	            if (callback) {
+	                callback();
 	            }
 	            return this;
 	        }
@@ -1637,7 +1769,6 @@
 	                item.options.hide.animation = options.animation;
 	            }
 	        }
-	
 	        item = {
 	            view: renderable,
 	            mod: new StateModifier(),
@@ -1649,14 +1780,18 @@
 	        item.node.add(renderable);
 	        _setItemOptions.call(this, item, options);
 	        item.showCallback = function() {
+	            item.showCallback = undefined;
 	            item.state = ItemState.VISIBLE;
 	            _updateState.call(this);
 	            _endTransferableAnimations.call(this, item);
+	            item.endSpec = undefined;
+	            item.startSpec = undefined;
 	            if (callback) {
 	                callback();
 	            }
 	        }.bind(this);
 	        item.hideCallback = function() {
+	            item.hideCallback = undefined;
 	            var index = this._viewStack.indexOf(item);
 	            this._renderables.views.splice(index, 1);
 	            this._viewStack.splice(index, 1);
@@ -1680,6 +1815,7 @@
 	     * @return {AnimationController} this
 	     */
 	    AnimationController.prototype.hide = function(options, callback) {
+	        _resume.call(this);
 	        var item = this._viewStack.length ? this._viewStack[this._viewStack.length - 1] : undefined;
 	        if (!item || (item.state === ItemState.HIDING)) {
 	            return this;
@@ -1712,19 +1848,86 @@
 	    /**
 	     * Clears the queue of any pending show animations.
 	     *
+	     * @param {Boolean} [stopAnimation] Freezes the current animation.
+	     * @param {Number} [framePerc] Frame at which to freeze the animation (in percentage).
 	     * @return {AnimationController} this
 	     */
-	    AnimationController.prototype.halt = function() {
+	    AnimationController.prototype.halt = function(stopAnimation, framePerc) {
+	        var item;
 	        for (var i = 0; i < this._viewStack.length; i++) {
-	            var item = this._viewStack[this._viewStack.length - 1];
-	            if ((item.state === ItemState.QUEUED) || (item.state === ItemState.SHOW)) {
-	                this._renderables.views.splice(this._viewStack.length - 1, 1);
-	                this._viewStack.splice(this._viewStack.length - 1, 1);
-	                item.view = undefined;
+	            if (stopAnimation) {
+	                item = this._viewStack[i];
+	                switch (item.state) {
+	                    case ItemState.SHOW:
+	                    case ItemState.SHOWING:
+	                    case ItemState.HIDE:
+	                    case ItemState.HIDING:
+	                    case ItemState.VISIBLE:
+	                        _haltItemAtFrame(item, framePerc);
+	                        break;
+	                }
 	            }
 	            else {
-	                break;
+	                item = this._viewStack[this._viewStack.length - 1];
+	                if ((item.state === ItemState.QUEUED) || (item.state === ItemState.SHOW)) {
+	                    this._renderables.views.splice(this._viewStack.length - 1, 1);
+	                    this._viewStack.splice(this._viewStack.length - 1, 1);
+	                    item.view = undefined;
+	                }
+	                else {
+	                    break;
+	                }
 	            }
+	        }
+	        return this;
+	    };
+	
+	    /**
+	     * Aborts the currently active show or hide operation, effectively
+	     * reversing the animation.
+	     *
+	     * @param {Function} [callback] Function that is called on completion.
+	     * @return {AnimationController} this
+	     */
+	    AnimationController.prototype.abort = function(callback) {
+	        if ((this._viewStack.length >= 2) && (this._viewStack[0].state === ItemState.HIDING) && (this._viewStack[1].state === ItemState.SHOWING)) {
+	            var prevItem = this._viewStack[0];
+	            var item = this._viewStack[1];
+	            var swapSpec;
+	
+	            item.halted = true;
+	            swapSpec = item.endSpec;
+	            item.endSpec = item.startSpec;
+	            item.startSpec = swapSpec;
+	            item.state = ItemState.HIDING;
+	            item.hideCallback = function() {
+	                item.hideCallback = undefined;
+	                var index = this._viewStack.indexOf(item);
+	                this._renderables.views.splice(index, 1);
+	                this._viewStack.splice(index, 1);
+	                item.view = undefined;
+	                _updateState.call(this);
+	                this.layout.reflowLayout();
+	            }.bind(this);
+	
+	            prevItem.halted = true;
+	            swapSpec = prevItem.endSpec;
+	            prevItem.endSpec = prevItem.startSpec;
+	            prevItem.startSpec = swapSpec;
+	            prevItem.state = ItemState.SHOWING;
+	            prevItem.showCallback = function() {
+	                prevItem.showCallback = undefined;
+	                prevItem.state = ItemState.VISIBLE;
+	                _updateState.call(this);
+	                _endTransferableAnimations.call(this, prevItem);
+	                prevItem.endSpec = undefined;
+	                prevItem.startSpec = undefined;
+	                if (callback) {
+	                    callback();
+	                }
+	            }.bind(this);
+	
+	            _resume.call(this);
 	        }
 	        return this;
 	    };
@@ -1744,6 +1947,15 @@
 	            }
 	        }
 	        return undefined;
+	    };
+	
+	    /**
+	     * Gets the size of the view.
+	     *
+	     * @return {Array.Number} size
+	     */
+	    AnimationController.prototype.getSize = function() {
+	        return this._size || this.options.size;
 	    };
 	
 	    module.exports = AnimationController;
@@ -2616,8 +2828,8 @@
 	 */
 	var EventHandler = __webpack_require__(/*! ./EventHandler */ 28);
 	var OptionsManager = __webpack_require__(/*! ./OptionsManager */ 29);
-	var RenderNode = __webpack_require__(/*! ./RenderNode */ 30);
-	var Utility = __webpack_require__(/*! ../utilities/Utility */ 31);
+	var RenderNode = __webpack_require__(/*! ./RenderNode */ 33);
+	var Utility = __webpack_require__(/*! ../utilities/Utility */ 35);
 	function View(options) {
 	    this._node = new RenderNode();
 	    this._eventInput = new EventHandler();
@@ -2665,7 +2877,7 @@
 	 * @license MPL 2.0
 	 * @copyright Famous Industries, Inc. 2015
 	 */
-	var ElementOutput = __webpack_require__(/*! ./ElementOutput */ 36);
+	var ElementOutput = __webpack_require__(/*! ./ElementOutput */ 42);
 	function Surface(options) {
 	    ElementOutput.call(this);
 	    this.options = {};
@@ -3005,16 +3217,16 @@
 	!(__WEBPACK_AMD_DEFINE_RESULT__ = function(require, exports, module) {
 	
 	    // import dependencies
-	    var Utility = __webpack_require__(/*! famous/utilities/Utility */ 31);
-	    var Entity = __webpack_require__(/*! famous/core/Entity */ 37);
-	    var ViewSequence = __webpack_require__(/*! famous/core/ViewSequence */ 38);
+	    var Utility = __webpack_require__(/*! famous/utilities/Utility */ 35);
+	    var Entity = __webpack_require__(/*! famous/core/Entity */ 36);
+	    var ViewSequence = __webpack_require__(/*! famous/core/ViewSequence */ 37);
 	    var OptionsManager = __webpack_require__(/*! famous/core/OptionsManager */ 29);
 	    var EventHandler = __webpack_require__(/*! famous/core/EventHandler */ 28);
-	    var LayoutUtility = __webpack_require__(/*! ./LayoutUtility */ 39);
-	    var LayoutNodeManager = __webpack_require__(/*! ./LayoutNodeManager */ 40);
-	    var LayoutNode = __webpack_require__(/*! ./LayoutNode */ 41);
-	    var FlowLayoutNode = __webpack_require__(/*! ./FlowLayoutNode */ 42);
-	    var Transform = __webpack_require__(/*! famous/core/Transform */ 32);
+	    var LayoutUtility = __webpack_require__(/*! ./LayoutUtility */ 38);
+	    var LayoutNodeManager = __webpack_require__(/*! ./LayoutNodeManager */ 39);
+	    var LayoutNode = __webpack_require__(/*! ./LayoutNode */ 40);
+	    var FlowLayoutNode = __webpack_require__(/*! ./FlowLayoutNode */ 41);
+	    var Transform = __webpack_require__(/*! famous/core/Transform */ 30);
 	    __webpack_require__(/*! ./helpers/LayoutDockHelper */ 18);
 	
 	    /**
@@ -3686,7 +3898,7 @@
 	     */
 	    LayoutController.prototype.get = function(indexOrId) {
 	      if (this._nodesById || (indexOrId instanceof String) || (typeof indexOrId === 'string')) {
-	        return this._nodesById[indexOrId];
+	        return this._nodesById ? this._nodesById[indexOrId] : undefined;
 	      }
 	      var viewSequence = _getViewSequenceAtIndex.call(this, indexOrId);
 	      return viewSequence ? viewSequence.get() : undefined;
@@ -4152,7 +4364,7 @@
 	!(__WEBPACK_AMD_DEFINE_RESULT__ = function(require, exports, module) {
 	
 	    // import dependencies
-	    var LayoutUtility = __webpack_require__(/*! ../LayoutUtility */ 39);
+	    var LayoutUtility = __webpack_require__(/*! ../LayoutUtility */ 38);
 	
 	    /**
 	     * @class
@@ -4167,19 +4379,21 @@
 	        this._size = size;
 	        this._context = context;
 	        this._options = options;
-	        this._z = (options && options.translateZ) ? options.translateZ : 0;
+	        this._data = {
+	            z: (options && options.translateZ) ? options.translateZ : 0
+	        };
 	        if (options && options.margins) {
 	            var margins = LayoutUtility.normalizeMargins(options.margins);
-	            this._left = margins[3];
-	            this._top = margins[0];
-	            this._right = size[0] - margins[1];
-	            this._bottom = size[1] - margins[2];
+	            this._data.left = margins[3];
+	            this._data.top = margins[0];
+	            this._data.right = size[0] - margins[1];
+	            this._data.bottom = size[1] - margins[2];
 	        }
 	        else {
-	            this._left = 0;
-	            this._top = 0;
-	            this._right = size[0];
-	            this._bottom = size[1];
+	            this._data.left = 0;
+	            this._data.top = 0;
+	            this._data.right = size[0];
+	            this._data.bottom = size[1];
 	        }
 	    }
 	
@@ -4239,16 +4453,16 @@
 	            height = height[1];
 	        }
 	        if (height === undefined) {
-	            var size = this._context.resolveSize(node, [this._right - this._left, this._bottom - this._top]);
+	            var size = this._context.resolveSize(node, [this._data.right - this._data.left, this._data.bottom - this._data.top]);
 	            height = size[1];
 	        }
 	        this._context.set(node, {
-	            size: [this._right - this._left, height],
+	            size: [this._data.right - this._data.left, height],
 	            origin: [0, 0],
 	            align: [0, 0],
-	            translate: [this._left, this._top, (z === undefined) ? this._z : z]
+	            translate: [this._data.left, this._data.top, (z === undefined) ? this._data.z : z]
 	        });
-	        this._top += height;
+	        this._data.top += height;
 	        return this;
 	    };
 	
@@ -4265,16 +4479,16 @@
 	            width = width[0];
 	        }
 	        if (width === undefined) {
-	            var size = this._context.resolveSize(node, [this._right - this._left, this._bottom - this._top]);
+	            var size = this._context.resolveSize(node, [this._data.right - this._data.left, this._data.bottom - this._data.top]);
 	            width = size[0];
 	        }
 	        this._context.set(node, {
-	            size: [width, this._bottom - this._top],
+	            size: [width, this._data.bottom - this._data.top],
 	            origin: [0, 0],
 	            align: [0, 0],
-	            translate: [this._left, this._top, (z === undefined) ? this._z : z]
+	            translate: [this._data.left, this._data.top, (z === undefined) ? this._data.z : z]
 	        });
-	        this._left += width;
+	        this._data.left += width;
 	        return this;
 	    };
 	
@@ -4291,16 +4505,16 @@
 	            height = height[1];
 	        }
 	        if (height === undefined) {
-	            var size = this._context.resolveSize(node, [this._right - this._left, this._bottom - this._top]);
+	            var size = this._context.resolveSize(node, [this._data.right - this._data.left, this._data.bottom - this._data.top]);
 	            height = size[1];
 	        }
 	        this._context.set(node, {
-	            size: [this._right - this._left, height],
+	            size: [this._data.right - this._data.left, height],
 	            origin: [0, 1],
 	            align: [0, 1],
-	            translate: [this._left, -(this._size[1] - this._bottom), (z === undefined) ? this._z : z]
+	            translate: [this._data.left, -(this._size[1] - this._data.bottom), (z === undefined) ? this._data.z : z]
 	        });
-	        this._bottom -= height;
+	        this._data.bottom -= height;
 	        return this;
 	    };
 	
@@ -4318,18 +4532,18 @@
 	        }
 	        if (node) {
 	            if (width === undefined) {
-	                var size = this._context.resolveSize(node, [this._right - this._left, this._bottom - this._top]);
+	                var size = this._context.resolveSize(node, [this._data.right - this._data.left, this._data.bottom - this._data.top]);
 	                width = size[0];
 	            }
 	            this._context.set(node, {
-	                size: [width, this._bottom - this._top],
+	                size: [width, this._data.bottom - this._data.top],
 	                origin: [1, 0],
 	                align: [1, 0],
-	                translate: [-(this._size[0] - this._right), this._top, (z === undefined) ? this._z : z]
+	                translate: [-(this._size[0] - this._data.right), this._data.top, (z === undefined) ? this._data.z : z]
 	            });
 	        }
 	        if (width) {
-	            this._right -= width;
+	            this._data.right -= width;
 	        }
 	        return this;
 	    };
@@ -4343,8 +4557,8 @@
 	     */
 	    LayoutDockHelper.prototype.fill = function(node, z) {
 	        this._context.set(node, {
-	            size: [this._right - this._left, this._bottom - this._top],
-	            translate: [this._left, this._top, (z === undefined) ? this._z : z]
+	            size: [this._data.right - this._data.left, this._data.bottom - this._data.top],
+	            translate: [this._data.left, this._data.top, (z === undefined) ? this._data.z : z]
 	        });
 	        return this;
 	    };
@@ -4357,11 +4571,20 @@
 	     */
 	    LayoutDockHelper.prototype.margins = function(margins) {
 	        margins = LayoutUtility.normalizeMargins(margins);
-	        this._left += margins[3];
-	        this._top += margins[0];
-	        this._right -= margins[1];
-	        this._bottom -= margins[2];
+	        this._data.left += margins[3];
+	        this._data.top += margins[0];
+	        this._data.right -= margins[1];
+	        this._data.bottom -= margins[2];
 	        return this;
+	    };
+	
+	    /**
+	     * Gets the current left/right/top/bottom/z bounds used by the dock-helper.
+	     *
+	     * @return {Object} `{left: x, right: x, top: x, bottom: x, z: x}`
+	     */
+	    LayoutDockHelper.prototype.get = function() {
+	        return this._data;
 	    };
 	
 	    // Register the helper
@@ -4969,10 +5192,10 @@
 	 * @license MPL 2.0
 	 * @copyright Famous Industries, Inc. 2015
 	 */
-	var RenderNode = __webpack_require__(/*! ./RenderNode */ 30);
+	var RenderNode = __webpack_require__(/*! ./RenderNode */ 33);
 	var EventHandler = __webpack_require__(/*! ./EventHandler */ 28);
 	var ElementAllocator = __webpack_require__(/*! ./ElementAllocator */ 43);
-	var Transform = __webpack_require__(/*! ./Transform */ 32);
+	var Transform = __webpack_require__(/*! ./Transform */ 30);
 	var Transitionable = __webpack_require__(/*! ../transitions/Transitionable */ 44);
 	var _zeroZero = [
 	    0,
@@ -5281,190 +5504,6 @@
 
 /***/ },
 /* 30 */
-/*!**************************************!*\
-  !*** ../~/famous/core/RenderNode.js ***!
-  \**************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	/* This Source Code Form is subject to the terms of the Mozilla Public
-	 * License, v. 2.0. If a copy of the MPL was not distributed with this
-	 * file, You can obtain one at http://mozilla.org/MPL/2.0/.
-	 *
-	 * @license MPL 2.0
-	 * @copyright Famous Industries, Inc. 2015
-	 */
-	var Entity = __webpack_require__(/*! ./Entity */ 37);
-	var SpecParser = __webpack_require__(/*! ./SpecParser */ 46);
-	function RenderNode(object) {
-	    this._object = null;
-	    this._child = null;
-	    this._hasMultipleChildren = false;
-	    this._isRenderable = false;
-	    this._isModifier = false;
-	    this._resultCache = {};
-	    this._prevResults = {};
-	    this._childResult = null;
-	    if (object)
-	        this.set(object);
-	}
-	RenderNode.prototype.add = function add(child) {
-	    var childNode = child instanceof RenderNode ? child : new RenderNode(child);
-	    if (this._child instanceof Array)
-	        this._child.push(childNode);
-	    else if (this._child) {
-	        this._child = [
-	            this._child,
-	            childNode
-	        ];
-	        this._hasMultipleChildren = true;
-	        this._childResult = [];
-	    } else
-	        this._child = childNode;
-	    return childNode;
-	};
-	RenderNode.prototype.get = function get() {
-	    return this._object || (this._hasMultipleChildren ? null : this._child ? this._child.get() : null);
-	};
-	RenderNode.prototype.set = function set(child) {
-	    this._childResult = null;
-	    this._hasMultipleChildren = false;
-	    this._isRenderable = child.render ? true : false;
-	    this._isModifier = child.modify ? true : false;
-	    this._object = child;
-	    this._child = null;
-	    if (child instanceof RenderNode)
-	        return child;
-	    else
-	        return this;
-	};
-	RenderNode.prototype.getSize = function getSize() {
-	    var result = null;
-	    var target = this.get();
-	    if (target && target.getSize)
-	        result = target.getSize();
-	    if (!result && this._child && this._child.getSize)
-	        result = this._child.getSize();
-	    return result;
-	};
-	function _applyCommit(spec, context, cacheStorage) {
-	    var result = SpecParser.parse(spec, context);
-	    var keys = Object.keys(result);
-	    for (var i = 0; i < keys.length; i++) {
-	        var id = keys[i];
-	        var childNode = Entity.get(id);
-	        var commitParams = result[id];
-	        commitParams.allocator = context.allocator;
-	        var commitResult = childNode.commit(commitParams);
-	        if (commitResult)
-	            _applyCommit(commitResult, context, cacheStorage);
-	        else
-	            cacheStorage[id] = commitParams;
-	    }
-	}
-	RenderNode.prototype.commit = function commit(context) {
-	    var prevKeys = Object.keys(this._prevResults);
-	    for (var i = 0; i < prevKeys.length; i++) {
-	        var id = prevKeys[i];
-	        if (this._resultCache[id] === undefined) {
-	            var object = Entity.get(id);
-	            if (object.cleanup)
-	                object.cleanup(context.allocator);
-	        }
-	    }
-	    this._prevResults = this._resultCache;
-	    this._resultCache = {};
-	    _applyCommit(this.render(), context, this._resultCache);
-	};
-	RenderNode.prototype.render = function render() {
-	    if (this._isRenderable)
-	        return this._object.render();
-	    var result = null;
-	    if (this._hasMultipleChildren) {
-	        result = this._childResult;
-	        var children = this._child;
-	        for (var i = 0; i < children.length; i++) {
-	            result[i] = children[i].render();
-	        }
-	    } else if (this._child)
-	        result = this._child.render();
-	    return this._isModifier ? this._object.modify(result) : result;
-	};
-	module.exports = RenderNode;
-
-/***/ },
-/* 31 */
-/*!****************************************!*\
-  !*** ../~/famous/utilities/Utility.js ***!
-  \****************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	/* This Source Code Form is subject to the terms of the Mozilla Public
-	 * License, v. 2.0. If a copy of the MPL was not distributed with this
-	 * file, You can obtain one at http://mozilla.org/MPL/2.0/.
-	 *
-	 * @license MPL 2.0
-	 * @copyright Famous Industries, Inc. 2015
-	 */
-	var Utility = {};
-	Utility.Direction = {
-	    X: 0,
-	    Y: 1,
-	    Z: 2
-	};
-	Utility.after = function after(count, callback) {
-	    var counter = count;
-	    return function () {
-	        counter--;
-	        if (counter === 0)
-	            callback.apply(this, arguments);
-	    };
-	};
-	Utility.loadURL = function loadURL(url, callback) {
-	    var xhr = new XMLHttpRequest();
-	    xhr.onreadystatechange = function onreadystatechange() {
-	        if (this.readyState === 4) {
-	            if (callback)
-	                callback(this.responseText);
-	        }
-	    };
-	    xhr.open('GET', url);
-	    xhr.send();
-	};
-	Utility.createDocumentFragmentFromHTML = function createDocumentFragmentFromHTML(html) {
-	    var element = document.createElement('div');
-	    element.innerHTML = html;
-	    var result = document.createDocumentFragment();
-	    while (element.hasChildNodes())
-	        result.appendChild(element.firstChild);
-	    return result;
-	};
-	Utility.clone = function clone(b) {
-	    var a;
-	    if (typeof b === 'object') {
-	        a = b instanceof Array ? [] : {};
-	        for (var key in b) {
-	            if (typeof b[key] === 'object' && b[key] !== null) {
-	                if (b[key] instanceof Array) {
-	                    a[key] = new Array(b[key].length);
-	                    for (var i = 0; i < b[key].length; i++) {
-	                        a[key][i] = Utility.clone(b[key][i]);
-	                    }
-	                } else {
-	                    a[key] = Utility.clone(b[key]);
-	                }
-	            } else {
-	                a[key] = b[key];
-	            }
-	        }
-	    } else {
-	        a = b;
-	    }
-	    return a;
-	};
-	module.exports = Utility;
-
-/***/ },
-/* 32 */
 /*!*************************************!*\
   !*** ../~/famous/core/Transform.js ***!
   \*************************************/
@@ -6176,7 +6215,7 @@
 	module.exports = Transform;
 
 /***/ },
-/* 33 */
+/* 31 */
 /*!************************************!*\
   !*** ../~/famous/core/Modifier.js ***!
   \************************************/
@@ -6189,7 +6228,7 @@
 	 * @license MPL 2.0
 	 * @copyright Famous Industries, Inc. 2015
 	 */
-	var Transform = __webpack_require__(/*! ./Transform */ 32);
+	var Transform = __webpack_require__(/*! ./Transform */ 30);
 	var Transitionable = __webpack_require__(/*! ../transitions/Transitionable */ 44);
 	var TransitionableTransform = __webpack_require__(/*! ../transitions/TransitionableTransform */ 47);
 	function Modifier(options) {
@@ -6436,7 +6475,7 @@
 	module.exports = Modifier;
 
 /***/ },
-/* 34 */
+/* 32 */
 /*!**********************************************!*\
   !*** ../~/famous/modifiers/StateModifier.js ***!
   \**********************************************/
@@ -6449,8 +6488,8 @@
 	 * @license MPL 2.0
 	 * @copyright Famous Industries, Inc. 2015
 	 */
-	var Modifier = __webpack_require__(/*! ../core/Modifier */ 33);
-	var Transform = __webpack_require__(/*! ../core/Transform */ 32);
+	var Modifier = __webpack_require__(/*! ../core/Modifier */ 31);
+	var Transform = __webpack_require__(/*! ../core/Transform */ 30);
 	var Transitionable = __webpack_require__(/*! ../transitions/Transitionable */ 44);
 	var TransitionableTransform = __webpack_require__(/*! ../transitions/TransitionableTransform */ 47);
 	function StateModifier(options) {
@@ -6598,7 +6637,119 @@
 	module.exports = StateModifier;
 
 /***/ },
-/* 35 */
+/* 33 */
+/*!**************************************!*\
+  !*** ../~/famous/core/RenderNode.js ***!
+  \**************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	/* This Source Code Form is subject to the terms of the Mozilla Public
+	 * License, v. 2.0. If a copy of the MPL was not distributed with this
+	 * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+	 *
+	 * @license MPL 2.0
+	 * @copyright Famous Industries, Inc. 2015
+	 */
+	var Entity = __webpack_require__(/*! ./Entity */ 36);
+	var SpecParser = __webpack_require__(/*! ./SpecParser */ 46);
+	function RenderNode(object) {
+	    this._object = null;
+	    this._child = null;
+	    this._hasMultipleChildren = false;
+	    this._isRenderable = false;
+	    this._isModifier = false;
+	    this._resultCache = {};
+	    this._prevResults = {};
+	    this._childResult = null;
+	    if (object)
+	        this.set(object);
+	}
+	RenderNode.prototype.add = function add(child) {
+	    var childNode = child instanceof RenderNode ? child : new RenderNode(child);
+	    if (this._child instanceof Array)
+	        this._child.push(childNode);
+	    else if (this._child) {
+	        this._child = [
+	            this._child,
+	            childNode
+	        ];
+	        this._hasMultipleChildren = true;
+	        this._childResult = [];
+	    } else
+	        this._child = childNode;
+	    return childNode;
+	};
+	RenderNode.prototype.get = function get() {
+	    return this._object || (this._hasMultipleChildren ? null : this._child ? this._child.get() : null);
+	};
+	RenderNode.prototype.set = function set(child) {
+	    this._childResult = null;
+	    this._hasMultipleChildren = false;
+	    this._isRenderable = child.render ? true : false;
+	    this._isModifier = child.modify ? true : false;
+	    this._object = child;
+	    this._child = null;
+	    if (child instanceof RenderNode)
+	        return child;
+	    else
+	        return this;
+	};
+	RenderNode.prototype.getSize = function getSize() {
+	    var result = null;
+	    var target = this.get();
+	    if (target && target.getSize)
+	        result = target.getSize();
+	    if (!result && this._child && this._child.getSize)
+	        result = this._child.getSize();
+	    return result;
+	};
+	function _applyCommit(spec, context, cacheStorage) {
+	    var result = SpecParser.parse(spec, context);
+	    var keys = Object.keys(result);
+	    for (var i = 0; i < keys.length; i++) {
+	        var id = keys[i];
+	        var childNode = Entity.get(id);
+	        var commitParams = result[id];
+	        commitParams.allocator = context.allocator;
+	        var commitResult = childNode.commit(commitParams);
+	        if (commitResult)
+	            _applyCommit(commitResult, context, cacheStorage);
+	        else
+	            cacheStorage[id] = commitParams;
+	    }
+	}
+	RenderNode.prototype.commit = function commit(context) {
+	    var prevKeys = Object.keys(this._prevResults);
+	    for (var i = 0; i < prevKeys.length; i++) {
+	        var id = prevKeys[i];
+	        if (this._resultCache[id] === undefined) {
+	            var object = Entity.get(id);
+	            if (object.cleanup)
+	                object.cleanup(context.allocator);
+	        }
+	    }
+	    this._prevResults = this._resultCache;
+	    this._resultCache = {};
+	    _applyCommit(this.render(), context, this._resultCache);
+	};
+	RenderNode.prototype.render = function render() {
+	    if (this._isRenderable)
+	        return this._object.render();
+	    var result = null;
+	    if (this._hasMultipleChildren) {
+	        result = this._childResult;
+	        var children = this._child;
+	        for (var i = 0; i < children.length; i++) {
+	            result[i] = children[i].render();
+	        }
+	    } else if (this._child)
+	        result = this._child.render();
+	    return this._isModifier ? this._object.modify(result) : result;
+	};
+	module.exports = RenderNode;
+
+/***/ },
+/* 34 */
 /*!**************************************!*\
   !*** ../~/famous/utilities/Timer.js ***!
   \**************************************/
@@ -6611,7 +6762,7 @@
 	 * @license MPL 2.0
 	 * @copyright Famous Industries, Inc. 2015
 	 */
-	var FamousEngine = __webpack_require__(/*! ../core/Engine */ 7);
+	var FamousEngine = __webpack_require__(/*! ../core/Engine */ 11);
 	var _event = 'prerender';
 	var getTime = window.performance && window.performance.now ? function () {
 	    return window.performance.now();
@@ -6705,10 +6856,10 @@
 	};
 
 /***/ },
-/* 36 */
-/*!*****************************************!*\
-  !*** ../~/famous/core/ElementOutput.js ***!
-  \*****************************************/
+/* 35 */
+/*!****************************************!*\
+  !*** ../~/famous/utilities/Utility.js ***!
+  \****************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	/* This Source Code Form is subject to the terms of the Mozilla Public
@@ -6718,184 +6869,66 @@
 	 * @license MPL 2.0
 	 * @copyright Famous Industries, Inc. 2015
 	 */
-	var Entity = __webpack_require__(/*! ./Entity */ 37);
-	var EventHandler = __webpack_require__(/*! ./EventHandler */ 28);
-	var Transform = __webpack_require__(/*! ./Transform */ 32);
-	var usePrefix = !('transform' in document.documentElement.style);
-	var devicePixelRatio = window.devicePixelRatio || 1;
-	function ElementOutput(element) {
-	    this._matrix = null;
-	    this._opacity = 1;
-	    this._origin = null;
-	    this._size = null;
-	    this._eventOutput = new EventHandler();
-	    this._eventOutput.bindThis(this);
-	    this.eventForwarder = function eventForwarder(event) {
-	        this._eventOutput.emit(event.type, event);
-	    }.bind(this);
-	    this.id = Entity.register(this);
-	    this._element = null;
-	    this._sizeDirty = false;
-	    this._originDirty = false;
-	    this._transformDirty = false;
-	    this._invisible = false;
-	    if (element)
-	        this.attach(element);
-	}
-	ElementOutput.prototype.on = function on(type, fn) {
-	    if (this._element)
-	        this._element.addEventListener(type, this.eventForwarder);
-	    this._eventOutput.on(type, fn);
+	var Utility = {};
+	Utility.Direction = {
+	    X: 0,
+	    Y: 1,
+	    Z: 2
 	};
-	ElementOutput.prototype.removeListener = function removeListener(type, fn) {
-	    this._eventOutput.removeListener(type, fn);
+	Utility.after = function after(count, callback) {
+	    var counter = count;
+	    return function () {
+	        counter--;
+	        if (counter === 0)
+	            callback.apply(this, arguments);
+	    };
 	};
-	ElementOutput.prototype.emit = function emit(type, event) {
-	    if (event && !event.origin)
-	        event.origin = this;
-	    var handled = this._eventOutput.emit(type, event);
-	    if (handled && event && event.stopPropagation)
-	        event.stopPropagation();
-	    return handled;
+	Utility.loadURL = function loadURL(url, callback) {
+	    var xhr = new XMLHttpRequest();
+	    xhr.onreadystatechange = function onreadystatechange() {
+	        if (this.readyState === 4) {
+	            if (callback)
+	                callback(this.responseText);
+	        }
+	    };
+	    xhr.open('GET', url);
+	    xhr.send();
 	};
-	ElementOutput.prototype.pipe = function pipe(target) {
-	    return this._eventOutput.pipe(target);
-	};
-	ElementOutput.prototype.unpipe = function unpipe(target) {
-	    return this._eventOutput.unpipe(target);
-	};
-	ElementOutput.prototype.render = function render() {
-	    return this.id;
-	};
-	function _addEventListeners(target) {
-	    for (var i in this._eventOutput.listeners) {
-	        target.addEventListener(i, this.eventForwarder);
-	    }
-	}
-	function _removeEventListeners(target) {
-	    for (var i in this._eventOutput.listeners) {
-	        target.removeEventListener(i, this.eventForwarder);
-	    }
-	}
-	function _formatCSSTransform(m) {
-	    m[12] = Math.round(m[12] * devicePixelRatio) / devicePixelRatio;
-	    m[13] = Math.round(m[13] * devicePixelRatio) / devicePixelRatio;
-	    var result = 'matrix3d(';
-	    for (var i = 0; i < 15; i++) {
-	        result += m[i] < 0.000001 && m[i] > -0.000001 ? '0,' : m[i] + ',';
-	    }
-	    result += m[15] + ')';
+	Utility.createDocumentFragmentFromHTML = function createDocumentFragmentFromHTML(html) {
+	    var element = document.createElement('div');
+	    element.innerHTML = html;
+	    var result = document.createDocumentFragment();
+	    while (element.hasChildNodes())
+	        result.appendChild(element.firstChild);
 	    return result;
-	}
-	var _setMatrix;
-	if (usePrefix) {
-	    _setMatrix = function (element, matrix) {
-	        element.style.webkitTransform = _formatCSSTransform(matrix);
-	    };
-	} else {
-	    _setMatrix = function (element, matrix) {
-	        element.style.transform = _formatCSSTransform(matrix);
-	    };
-	}
-	function _formatCSSOrigin(origin) {
-	    return 100 * origin[0] + '% ' + 100 * origin[1] + '%';
-	}
-	var _setOrigin = usePrefix ? function (element, origin) {
-	    element.style.webkitTransformOrigin = _formatCSSOrigin(origin);
-	} : function (element, origin) {
-	    element.style.transformOrigin = _formatCSSOrigin(origin);
 	};
-	var _setInvisible = usePrefix ? function (element) {
-	    element.style.webkitTransform = 'scale3d(0.0001,0.0001,0.0001)';
-	    element.style.opacity = 0;
-	} : function (element) {
-	    element.style.transform = 'scale3d(0.0001,0.0001,0.0001)';
-	    element.style.opacity = 0;
-	};
-	function _xyNotEquals(a, b) {
-	    return a && b ? a[0] !== b[0] || a[1] !== b[1] : a !== b;
-	}
-	ElementOutput.prototype.commit = function commit(context) {
-	    var target = this._element;
-	    if (!target)
-	        return;
-	    var matrix = context.transform;
-	    var opacity = context.opacity;
-	    var origin = context.origin;
-	    var size = context.size;
-	    if (!matrix && this._matrix) {
-	        this._matrix = null;
-	        this._opacity = 0;
-	        _setInvisible(target);
-	        return;
-	    }
-	    if (_xyNotEquals(this._origin, origin))
-	        this._originDirty = true;
-	    if (Transform.notEquals(this._matrix, matrix))
-	        this._transformDirty = true;
-	    if (this._invisible) {
-	        this._invisible = false;
-	        this._element.style.display = '';
-	    }
-	    if (this._opacity !== opacity) {
-	        this._opacity = opacity;
-	        target.style.opacity = opacity >= 1 ? '0.999999' : opacity;
-	    }
-	    if (this._transformDirty || this._originDirty || this._sizeDirty) {
-	        if (this._sizeDirty)
-	            this._sizeDirty = false;
-	        if (this._originDirty) {
-	            if (origin) {
-	                if (!this._origin)
-	                    this._origin = [
-	                        0,
-	                        0
-	                    ];
-	                this._origin[0] = origin[0];
-	                this._origin[1] = origin[1];
-	            } else
-	                this._origin = null;
-	            _setOrigin(target, this._origin);
-	            this._originDirty = false;
+	Utility.clone = function clone(b) {
+	    var a;
+	    if (typeof b === 'object') {
+	        a = b instanceof Array ? [] : {};
+	        for (var key in b) {
+	            if (typeof b[key] === 'object' && b[key] !== null) {
+	                if (b[key] instanceof Array) {
+	                    a[key] = new Array(b[key].length);
+	                    for (var i = 0; i < b[key].length; i++) {
+	                        a[key][i] = Utility.clone(b[key][i]);
+	                    }
+	                } else {
+	                    a[key] = Utility.clone(b[key]);
+	                }
+	            } else {
+	                a[key] = b[key];
+	            }
 	        }
-	        if (!matrix)
-	            matrix = Transform.identity;
-	        this._matrix = matrix;
-	        var aaMatrix = this._size ? Transform.thenMove(matrix, [
-	            -this._size[0] * origin[0],
-	            -this._size[1] * origin[1],
-	            0
-	        ]) : matrix;
-	        _setMatrix(target, aaMatrix);
-	        this._transformDirty = false;
+	    } else {
+	        a = b;
 	    }
+	    return a;
 	};
-	ElementOutput.prototype.cleanup = function cleanup() {
-	    if (this._element) {
-	        this._invisible = true;
-	        this._element.style.display = 'none';
-	    }
-	};
-	ElementOutput.prototype.attach = function attach(target) {
-	    this._element = target;
-	    _addEventListeners.call(this, target);
-	};
-	ElementOutput.prototype.detach = function detach() {
-	    var target = this._element;
-	    if (target) {
-	        _removeEventListeners.call(this, target);
-	        if (this._invisible) {
-	            this._invisible = false;
-	            this._element.style.display = '';
-	        }
-	    }
-	    this._element = null;
-	    return target;
-	};
-	module.exports = ElementOutput;
+	module.exports = Utility;
 
 /***/ },
-/* 37 */
+/* 36 */
 /*!**********************************!*\
   !*** ../~/famous/core/Entity.js ***!
   \**********************************/
@@ -6931,7 +6964,7 @@
 	};
 
 /***/ },
-/* 38 */
+/* 37 */
 /*!****************************************!*\
   !*** ../~/famous/core/ViewSequence.js ***!
   \****************************************/
@@ -7187,7 +7220,7 @@
 	module.exports = ViewSequence;
 
 /***/ },
-/* 39 */
+/* 38 */
 /*!*********************************************!*\
   !*** ../~/famous-flex/src/LayoutUtility.js ***!
   \*********************************************/
@@ -7214,7 +7247,7 @@
 	!(__WEBPACK_AMD_DEFINE_RESULT__ = function(require, exports, module) {
 	
 	    // import dependencies
-	    var Utility = __webpack_require__(/*! famous/utilities/Utility */ 31);
+	    var Utility = __webpack_require__(/*! famous/utilities/Utility */ 35);
 	
 	    /**
 	     * @class
@@ -7485,7 +7518,7 @@
 
 
 /***/ },
-/* 40 */
+/* 39 */
 /*!*************************************************!*\
   !*** ../~/famous-flex/src/LayoutNodeManager.js ***!
   \*************************************************/
@@ -7498,7 +7531,7 @@
 	 *
 	 * @author: Hein Rutjes (IjzerenHein)
 	 * @license MIT
-	 * @copyright Gloey Apps, 2014 - 2015
+	 * @copyright Gloey Apps, 2014/2015
 	 */
 	
 	/**
@@ -7519,7 +7552,9 @@
 	
 	    // import dependencies
 	    var LayoutContext = __webpack_require__(/*! ./LayoutContext */ 48);
-	    var LayoutUtility = __webpack_require__(/*! ./LayoutUtility */ 39);
+	    var LayoutUtility = __webpack_require__(/*! ./LayoutUtility */ 38);
+	    var Surface = __webpack_require__(/*! famous/core/Surface */ 16);
+	    var RenderNode = __webpack_require__(/*! famous/core/RenderNode */ 33);
 	
 	    var MAX_POOL_SIZE = 100;
 	
@@ -7695,6 +7730,10 @@
 	                    result.modified = true;
 	                }
 	
+	                // Set meta data
+	                spec.usesTrueSize = node.usesTrueSize;
+	                spec.trueSizeRequested = node.trueSizeRequested;
+	
 	                // Add node to result output
 	                specs.push(spec);
 	                node = node._next;
@@ -7762,10 +7801,10 @@
 	     */
 	    LayoutNodeManager.prototype.preallocateNodes = function(count, spec) {
 	        var nodes = [];
-	        for (var i = 0; i < count ; i++) {
+	        for (var i = 0; i < count; i++) {
 	            nodes.push(this.createNode(undefined, spec));
 	        }
-	        for (i = 0; i < count ; i++) {
+	        for (i = 0; i < count; i++) {
 	            _destroyNode.call(this, nodes[i]);
 	        }
 	    };
@@ -8148,7 +8187,40 @@
 	    }
 	
 	    /**
-	     * Resolve the size of the layout-node from the renderable itsself
+	     * Helper function that recursively discovers the configured size for a
+	     * given renderNode.
+	     */
+	    function _resolveConfigSize(renderNode) {
+	        if (renderNode instanceof RenderNode) {
+	            var result = null;
+	            var target = renderNode.get();
+	            if (target) {
+	                result = _resolveConfigSize(target);
+	                if (result) {
+	                    return result;
+	                }
+	            }
+	            if (renderNode._child) {
+	                return _resolveConfigSize(renderNode._child);
+	            }
+	        }
+	        else if (renderNode instanceof Surface) {
+	            return renderNode.size ? {
+	                renderNode: renderNode,
+	                size: renderNode.size
+	            } : undefined;
+	        }
+	        else if (renderNode.options && renderNode.options.size) {
+	            return {
+	                renderNode: renderNode,
+	                size: renderNode.options.size
+	            };
+	        }
+	        return undefined;
+	    }
+	
+	    /**
+	     * Resolve the size of the layout-node from the renderable itsself.
 	     */
 	    function _contextResolveSize(contextNodeOrId, parentSize) {
 	        var contextNode = this._nodesById ? _contextGet.call(this, contextNodeOrId) : contextNodeOrId;
@@ -8171,54 +8243,54 @@
 	        // It contains portions that ensure that the true-size of a Surface is re-evaluated
 	        // and also workaround code that backs up the size of a Surface, so that when the surface
 	        // is re-added to the DOM (e.g. when scrolling) it doesn't temporarily have a size of 0.
-	        var configSize = renderNode.size && (renderNode._trueSizeCheck !== undefined) ? renderNode.size : undefined;
-	        if (configSize && ((configSize[0] === true) || (configSize[1] === true))) {
+	        var configSize = _resolveConfigSize(renderNode);
+	        if (configSize && ((configSize.size[0] === true) || (configSize.size[1] === true))) {
 	            contextNode.usesTrueSize = true;
-	            var backupSize = renderNode._backupSize;
-	            if (renderNode._contentDirty || renderNode._trueSizeCheck) {
-	              this._trueSizeRequested = true;
-	              contextNode.trueSizeRequested = true;
-	            }
-	            if (renderNode._trueSizeCheck) {
-	
-	                // Fix for true-size renderables. When true-size is used, the size
-	                // is incorrect for one render-cycle due to the fact that Surface.commit
-	                // updates the content after asking the DOM for the offsetHeight/offsetWidth.
-	                // The code below backs the size up, and re-uses that when this scenario
-	                // occurs.
-	                if (backupSize && (configSize !== size)) {
-	                    var newWidth = (configSize[0] === true) ? Math.max(backupSize[0], size[0]) : size[0];
-	                    var newHeight = (configSize[1] === true) ? Math.max(backupSize[1], size[1]) : size[1];
-	                    backupSize[0] = newWidth;
-	                    backupSize[1] = newHeight;
-	                    size = backupSize;
-	                    renderNode._backupSize = undefined;
-	                    backupSize = undefined;
+	            if (configSize.renderNode instanceof Surface) {
+	                var backupSize = configSize.renderNode._backupSize;
+	                if (configSize.renderNode._contentDirty || configSize.renderNode._trueSizeCheck) {
+	                  this._trueSizeRequested = true;
+	                  contextNode.trueSizeRequested = true;
 	                }
-	            }
-	            if (this._reevalTrueSize || (backupSize && ((backupSize[0] !== size[0]) || (backupSize[1] !== size[1])))) {
-	                renderNode._trueSizeCheck = true; // force request of true-size from DOM
-	                renderNode._sizeDirty = true;
-	                this._trueSizeRequested = true;
+	                if (configSize.renderNode._trueSizeCheck) {
+	
+	                    // Fix for true-size renderables. When true-size is used, the size
+	                    // is incorrect for one render-cycle due to the fact that Surface.commit
+	                    // updates the content after asking the DOM for the offsetHeight/offsetWidth.
+	                    // The code below backs the size up, and re-uses that when this scenario
+	                    // occurs.
+	                    if (backupSize && (configSize.size !== size)) {
+	                        var newWidth = (configSize.size[0] === true) ? Math.max(backupSize[0], size[0]) : size[0];
+	                        var newHeight = (configSize.size[1] === true) ? Math.max(backupSize[1], size[1]) : size[1];
+	                        backupSize[0] = newWidth;
+	                        backupSize[1] = newHeight;
+	                        size = backupSize;
+	                        configSize.renderNode._backupSize = undefined;
+	                        backupSize = undefined;
+	                    }
+	                }
+	                if (this._reevalTrueSize || (backupSize && ((backupSize[0] !== size[0]) || (backupSize[1] !== size[1])))) {
+	                    configSize.renderNode._trueSizeCheck = true; // force request of true-size from DOM
+	                    configSize.renderNode._sizeDirty = true;
+	                    this._trueSizeRequested = true;
+	                }
+	
+	                // Backup the size of the node
+	                if (!backupSize) {
+	                    configSize.renderNode._backupSize = [0, 0];
+	                    backupSize = configSize.renderNode._backupSize;
+	                }
+	                backupSize[0] = size[0];
+	                backupSize[1] = size[1];
 	            }
 	
-	            // Backup the size of the node
-	            if (!backupSize) {
-	                renderNode._backupSize = [0, 0];
-	                backupSize = renderNode._backupSize;
-	            }
-	            backupSize[0] = size[0];
-	            backupSize[1] = size[1];
-	        }
-	
-	        // Ensure re-layout when a child layout-controller is using true-size and it
-	        // has ben changed.
-	        configSize = renderNode._nodes ? renderNode.options.size : undefined;
-	        if (configSize && ((configSize[0] === true) || (configSize[1] === true))) {
-	            if (this._reevalTrueSize || renderNode._nodes._trueSizeRequested) {
-	                contextNode.usesTrueSize = true;
-	                contextNode.trueSizeRequested = true;
-	                this._trueSizeRequested = true;
+	            // Ensure re-layout when a child layout-controller is using true-size and it
+	            // has ben changed.
+	            else if (configSize.renderNode._nodes) {
+	                if (this._reevalTrueSize || configSize.renderNode._nodes._trueSizeRequested) {
+	                    contextNode.trueSizeRequested = true;
+	                    this._trueSizeRequested = true;
+	                }
 	            }
 	        }
 	
@@ -8252,7 +8324,7 @@
 
 
 /***/ },
-/* 41 */
+/* 40 */
 /*!******************************************!*\
   !*** ../~/famous-flex/src/LayoutNode.js ***!
   \******************************************/
@@ -8276,8 +8348,8 @@
 	!(__WEBPACK_AMD_DEFINE_RESULT__ = function(require, exports, module) {
 	
 	    // import dependencies
-	    var Transform = __webpack_require__(/*! famous/core/Transform */ 32);
-	    var LayoutUtility = __webpack_require__(/*! ./LayoutUtility */ 39);
+	    var Transform = __webpack_require__(/*! famous/core/Transform */ 30);
+	    var LayoutUtility = __webpack_require__(/*! ./LayoutUtility */ 38);
 	
 	    /**
 	     * @class
@@ -8461,7 +8533,7 @@
 
 
 /***/ },
-/* 42 */
+/* 41 */
 /*!**********************************************!*\
   !*** ../~/famous-flex/src/FlowLayoutNode.js ***!
   \**********************************************/
@@ -8486,12 +8558,12 @@
 	
 	    // import dependencies
 	    var OptionsManager = __webpack_require__(/*! famous/core/OptionsManager */ 29);
-	    var Transform = __webpack_require__(/*! famous/core/Transform */ 32);
+	    var Transform = __webpack_require__(/*! famous/core/Transform */ 30);
 	    var Vector = __webpack_require__(/*! famous/math/Vector */ 49);
 	    var Particle = __webpack_require__(/*! famous/physics/bodies/Particle */ 50);
 	    var Spring = __webpack_require__(/*! famous/physics/forces/Spring */ 51);
 	    var PhysicsEngine = __webpack_require__(/*! famous/physics/PhysicsEngine */ 52);
-	    var LayoutNode = __webpack_require__(/*! ./LayoutNode */ 41);
+	    var LayoutNode = __webpack_require__(/*! ./LayoutNode */ 40);
 	    var Transitionable = __webpack_require__(/*! famous/transitions/Transitionable */ 44);
 	
 	    /**
@@ -9029,6 +9101,196 @@
 
 
 /***/ },
+/* 42 */
+/*!*****************************************!*\
+  !*** ../~/famous/core/ElementOutput.js ***!
+  \*****************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	/* This Source Code Form is subject to the terms of the Mozilla Public
+	 * License, v. 2.0. If a copy of the MPL was not distributed with this
+	 * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+	 *
+	 * @license MPL 2.0
+	 * @copyright Famous Industries, Inc. 2015
+	 */
+	var Entity = __webpack_require__(/*! ./Entity */ 36);
+	var EventHandler = __webpack_require__(/*! ./EventHandler */ 28);
+	var Transform = __webpack_require__(/*! ./Transform */ 30);
+	var usePrefix = !('transform' in document.documentElement.style);
+	var devicePixelRatio = window.devicePixelRatio || 1;
+	function ElementOutput(element) {
+	    this._matrix = null;
+	    this._opacity = 1;
+	    this._origin = null;
+	    this._size = null;
+	    this._eventOutput = new EventHandler();
+	    this._eventOutput.bindThis(this);
+	    this.eventForwarder = function eventForwarder(event) {
+	        this._eventOutput.emit(event.type, event);
+	    }.bind(this);
+	    this.id = Entity.register(this);
+	    this._element = null;
+	    this._sizeDirty = false;
+	    this._originDirty = false;
+	    this._transformDirty = false;
+	    this._invisible = false;
+	    if (element)
+	        this.attach(element);
+	}
+	ElementOutput.prototype.on = function on(type, fn) {
+	    if (this._element)
+	        this._element.addEventListener(type, this.eventForwarder);
+	    this._eventOutput.on(type, fn);
+	};
+	ElementOutput.prototype.removeListener = function removeListener(type, fn) {
+	    this._eventOutput.removeListener(type, fn);
+	};
+	ElementOutput.prototype.emit = function emit(type, event) {
+	    if (event && !event.origin)
+	        event.origin = this;
+	    var handled = this._eventOutput.emit(type, event);
+	    if (handled && event && event.stopPropagation)
+	        event.stopPropagation();
+	    return handled;
+	};
+	ElementOutput.prototype.pipe = function pipe(target) {
+	    return this._eventOutput.pipe(target);
+	};
+	ElementOutput.prototype.unpipe = function unpipe(target) {
+	    return this._eventOutput.unpipe(target);
+	};
+	ElementOutput.prototype.render = function render() {
+	    return this.id;
+	};
+	function _addEventListeners(target) {
+	    for (var i in this._eventOutput.listeners) {
+	        target.addEventListener(i, this.eventForwarder);
+	    }
+	}
+	function _removeEventListeners(target) {
+	    for (var i in this._eventOutput.listeners) {
+	        target.removeEventListener(i, this.eventForwarder);
+	    }
+	}
+	function _formatCSSTransform(m) {
+	    m[12] = Math.round(m[12] * devicePixelRatio) / devicePixelRatio;
+	    m[13] = Math.round(m[13] * devicePixelRatio) / devicePixelRatio;
+	    var result = 'matrix3d(';
+	    for (var i = 0; i < 15; i++) {
+	        result += m[i] < 0.000001 && m[i] > -0.000001 ? '0,' : m[i] + ',';
+	    }
+	    result += m[15] + ')';
+	    return result;
+	}
+	var _setMatrix;
+	if (usePrefix) {
+	    _setMatrix = function (element, matrix) {
+	        element.style.webkitTransform = _formatCSSTransform(matrix);
+	    };
+	} else {
+	    _setMatrix = function (element, matrix) {
+	        element.style.transform = _formatCSSTransform(matrix);
+	    };
+	}
+	function _formatCSSOrigin(origin) {
+	    return 100 * origin[0] + '% ' + 100 * origin[1] + '%';
+	}
+	var _setOrigin = usePrefix ? function (element, origin) {
+	    element.style.webkitTransformOrigin = _formatCSSOrigin(origin);
+	} : function (element, origin) {
+	    element.style.transformOrigin = _formatCSSOrigin(origin);
+	};
+	var _setInvisible = usePrefix ? function (element) {
+	    element.style.webkitTransform = 'scale3d(0.0001,0.0001,0.0001)';
+	    element.style.opacity = 0;
+	} : function (element) {
+	    element.style.transform = 'scale3d(0.0001,0.0001,0.0001)';
+	    element.style.opacity = 0;
+	};
+	function _xyNotEquals(a, b) {
+	    return a && b ? a[0] !== b[0] || a[1] !== b[1] : a !== b;
+	}
+	ElementOutput.prototype.commit = function commit(context) {
+	    var target = this._element;
+	    if (!target)
+	        return;
+	    var matrix = context.transform;
+	    var opacity = context.opacity;
+	    var origin = context.origin;
+	    var size = context.size;
+	    if (!matrix && this._matrix) {
+	        this._matrix = null;
+	        this._opacity = 0;
+	        _setInvisible(target);
+	        return;
+	    }
+	    if (_xyNotEquals(this._origin, origin))
+	        this._originDirty = true;
+	    if (Transform.notEquals(this._matrix, matrix))
+	        this._transformDirty = true;
+	    if (this._invisible) {
+	        this._invisible = false;
+	        this._element.style.display = '';
+	    }
+	    if (this._opacity !== opacity) {
+	        this._opacity = opacity;
+	        target.style.opacity = opacity >= 1 ? '0.999999' : opacity;
+	    }
+	    if (this._transformDirty || this._originDirty || this._sizeDirty) {
+	        if (this._sizeDirty)
+	            this._sizeDirty = false;
+	        if (this._originDirty) {
+	            if (origin) {
+	                if (!this._origin)
+	                    this._origin = [
+	                        0,
+	                        0
+	                    ];
+	                this._origin[0] = origin[0];
+	                this._origin[1] = origin[1];
+	            } else
+	                this._origin = null;
+	            _setOrigin(target, this._origin);
+	            this._originDirty = false;
+	        }
+	        if (!matrix)
+	            matrix = Transform.identity;
+	        this._matrix = matrix;
+	        var aaMatrix = this._size ? Transform.thenMove(matrix, [
+	            -this._size[0] * origin[0],
+	            -this._size[1] * origin[1],
+	            0
+	        ]) : matrix;
+	        _setMatrix(target, aaMatrix);
+	        this._transformDirty = false;
+	    }
+	};
+	ElementOutput.prototype.cleanup = function cleanup() {
+	    if (this._element) {
+	        this._invisible = true;
+	        this._element.style.display = 'none';
+	    }
+	};
+	ElementOutput.prototype.attach = function attach(target) {
+	    this._element = target;
+	    _addEventListeners.call(this, target);
+	};
+	ElementOutput.prototype.detach = function detach() {
+	    var target = this._element;
+	    if (target) {
+	        _removeEventListeners.call(this, target);
+	        if (this._invisible) {
+	            this._invisible = false;
+	            this._element.style.display = '';
+	        }
+	    }
+	    this._element = null;
+	    return target;
+	};
+	module.exports = ElementOutput;
+
+/***/ },
 /* 43 */
 /*!********************************************!*\
   !*** ../~/famous/core/ElementAllocator.js ***!
@@ -9295,7 +9557,7 @@
 	 * @license MPL 2.0
 	 * @copyright Famous Industries, Inc. 2015
 	 */
-	var Transform = __webpack_require__(/*! ./Transform */ 32);
+	var Transform = __webpack_require__(/*! ./Transform */ 30);
 	function SpecParser() {
 	    this.result = {};
 	}
@@ -9435,8 +9697,8 @@
 	 * @copyright Famous Industries, Inc. 2015
 	 */
 	var Transitionable = __webpack_require__(/*! ./Transitionable */ 44);
-	var Transform = __webpack_require__(/*! ../core/Transform */ 32);
-	var Utility = __webpack_require__(/*! ../utilities/Utility */ 31);
+	var Transform = __webpack_require__(/*! ../core/Transform */ 30);
+	var Utility = __webpack_require__(/*! ../utilities/Utility */ 35);
 	function TransitionableTransform(transform) {
 	    this._final = Transform.identity.slice();
 	    this._finalTranslate = [
@@ -10000,7 +10262,7 @@
 	 * @copyright Famous Industries, Inc. 2015
 	 */
 	var Vector = __webpack_require__(/*! ../../math/Vector */ 49);
-	var Transform = __webpack_require__(/*! ../../core/Transform */ 32);
+	var Transform = __webpack_require__(/*! ../../core/Transform */ 30);
 	var EventHandler = __webpack_require__(/*! ../../core/EventHandler */ 28);
 	var Integrator = __webpack_require__(/*! ../integrators/SymplecticEuler */ 55);
 	function Particle(options) {
@@ -10630,7 +10892,7 @@
 	 * @license MPL 2.0
 	 * @copyright Famous Industries, Inc. 2015
 	 */
-	var Utility = __webpack_require__(/*! ../utilities/Utility */ 31);
+	var Utility = __webpack_require__(/*! ../utilities/Utility */ 35);
 	function MultipleTransition(method) {
 	    this.method = method;
 	    this._instances = [];
